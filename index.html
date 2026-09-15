@@ -59,6 +59,7 @@
   p{margin:0}
   .wrap{max-width:1120px;margin:0 auto}
   :focus-visible{outline:2px solid var(--amber);outline-offset:3px;border-radius:6px}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
   /* ---------- brand ---------- */
   .brand{display:inline-flex;align-items:center;line-height:0}
@@ -183,7 +184,7 @@
   .card .shot{margin-top:28px}
   .stack{display:grid;gap:18px;margin-top:48px}
   .g2{grid-template-columns:1fr 1fr;align-items:stretch}
-  .stack>.card:not(.feat){display:flex;flex-direction:column}
+  .stack>.card:not(.feat):not(.demo){display:flex;flex-direction:column}
   .stack>.card>h3+p{margin-bottom:26px}
   .stack>.card>.ui,.stack>.card>.shot{margin-top:auto}
   .g3{grid-template-columns:repeat(3,1fr)}
@@ -260,6 +261,62 @@
   .script .c{text-align:center;display:block}
   .script .cur{display:inline-block;width:.55em;height:1.1em;background:var(--amber);vertical-align:text-bottom;animation:blink 1s steps(2) infinite}
   @keyframes blink{to{opacity:0}}
+
+  /* interactive tutor demo */
+  .demo{display:grid;grid-template-columns:1fr 1.55fr;gap:36px;align-items:start}
+  .demo .txt h3{font-size:clamp(24px,3vw,32px)}
+  .demo .txt h3+p{font-size:clamp(16px,1.8vw,19px)}
+  .qchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+  .qchips button{appearance:none;font:inherit;font-size:13.5px;font-weight:600;color:var(--muted);background:#151513;border:1px solid var(--line-2);border-radius:999px;padding:8px 13px;cursor:pointer;transition:all .2s;text-align:left}
+  .qchips button:hover{color:var(--text);border-color:#4a4a44}
+  .qchips button[aria-pressed="true"]{color:#000;background:var(--amber);border-color:var(--amber)}
+  .demo .fine{margin-top:18px;color:var(--muted-2);font-size:12.5px;line-height:1.5}
+  .tu{background:#050505;color:#e8e6df;font-size:13px;display:grid;grid-template-columns:1fr 200px;min-height:460px}
+  .tu-main{display:flex;flex-direction:column;min-width:0;border-right:1px solid var(--line)}
+  .tu-top{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+  .tu-top .qm{width:22px;height:22px;border-radius:50%;background:var(--amber);color:#000;font-weight:900;font-size:12px;display:inline-flex;align-items:center;justify-content:center;font-family:var(--wm)}
+  .tu-top b{font-size:13.5px;font-weight:600}
+  .tu-top small{display:block;color:var(--muted-2);font-size:11px}
+  .tu-top .st{margin-left:auto;display:flex;gap:6px}
+  .tu-top .st span{padding:3px 8px;border-radius:6px;font-size:10.5px;font-weight:700;border:1px solid var(--line-2);color:var(--muted)}
+  .tu-top .st span.g{color:var(--green);border-color:rgba(60,217,138,.4)}
+  .tu-top .st span.y{color:var(--amber);border-color:rgba(239,172,57,.4)}
+  .tu-log{flex:1;overflow-y:auto;padding:16px 14px;display:flex;flex-direction:column;gap:12px;max-height:380px;scroll-behavior:smooth}
+  .tu-me{align-self:flex-end;max-width:78%;background:#1b1a14;border:1px solid rgba(239,172,57,.25);border-radius:14px 14px 4px 14px;padding:10px 12px;font-size:13px;line-height:1.45}
+  .tu-me small{display:block;color:var(--muted-2);font-size:10px;margin-bottom:3px;text-align:right}
+  .tu-ai{display:grid;grid-template-columns:22px 1fr;gap:10px;max-width:92%}
+  .tu-ai .sun{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle,var(--amber) 35%,rgba(239,172,57,.25) 36%,transparent 70%);box-shadow:0 0 12px rgba(239,172,57,.5)}
+  .tu-ai .body{line-height:1.5;font-size:13px;color:#e8e6df;white-space:pre-wrap}
+  .tu-ai .body b{color:#fff}
+  .tu-ai .st{color:var(--amber);font-size:12px;display:flex;align-items:center;gap:6px}
+  .tu-ai .st i{width:10px;height:10px;border:1.5px solid var(--amber);border-right-color:transparent;border-radius:50%;animation:spin 1s linear infinite;display:inline-block}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .tu-ctx{margin-top:10px}
+  .tu-ctx .lbl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);margin-bottom:6px}
+  .tu-ctx .go{display:flex;flex-wrap:wrap;gap:6px}
+  .tu-ctx .go span{padding:5px 9px;border-radius:6px;background:var(--amber);color:#000;font-size:11.5px;font-weight:700}
+  .tu-card{margin-top:10px;border:1px solid rgba(239,172,57,.35);border-radius:10px;padding:10px 12px;background:#0e0e0c}
+  .tu-card .h{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600}
+  .tu-card .h .tag{margin-left:auto;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2);border:1px solid var(--line-2);padding:2px 6px;border-radius:4px}
+  .tu-card p{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.45}
+  .tu-card .acts{display:flex;gap:12px;margin-top:8px;font-size:11.5px;font-weight:600}
+  .tu-card .acts span:first-child{color:var(--muted)}.tu-card .acts span:last-child{color:var(--green)}
+  .tu-in{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line)}
+  .tu-in input{flex:1;min-width:0;background:#0e0e0d;border:1px solid var(--line-2);border-radius:8px;color:var(--text);font:inherit;font-size:13px;padding:10px 12px;outline:none}
+  .tu-in input:focus{border-color:rgba(239,172,57,.6)}
+  .tu-in button{appearance:none;border:0;width:40px;border-radius:8px;background:var(--amber);color:#000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+  .tu-in button svg{width:16px;height:16px}
+  .tu-in button:disabled{opacity:.5;cursor:default}
+  .tu-side{padding:14px 12px;font-size:12px}
+  .tu-side .lbl{color:var(--amber);font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+  .tu-side .sub{color:var(--muted-2);font-size:11px;margin-top:3px}
+  .tu-side .dest{margin-top:12px;display:flex;flex-direction:column;gap:6px}
+  .tu-side .dest span{padding:8px 10px;border:1px solid var(--line);border-radius:8px;color:var(--muted);display:flex;align-items:center;gap:8px;transition:border-color .3s,color .3s}
+  .tu-side .dest span.on{color:var(--text);border-color:rgba(239,172,57,.5)}
+  .tu-side .dest span::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--line-2)}
+  .tu-side .dest span.on::before{background:var(--amber)}
+  .tu-side .done{margin-top:16px;color:var(--muted-2);font-size:11px}
+  .tu-side .done b{color:var(--green)}
 
   /* protection */
   .prot{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px}
@@ -350,6 +407,12 @@
   .code .tabs span.on{background:#1f1f1c;color:var(--text)}
   .code .tabs .copy{margin-left:auto;color:var(--muted-2)}
   .code pre{margin:0;padding:18px 20px;font-family:var(--mono);font-size:13.5px;line-height:1.6;color:#cfcdc6;overflow-x:auto}
+  /* mobile: keep the code block inside the viewport (no page zoom-out) */
+  html{overflow-x:clip}
+  .split>*,.rv,.code{min-width:0}
+  .code{max-width:100%}
+  .code pre{max-width:100%;-webkit-overflow-scrolling:touch}
+  @media (max-width:520px){.code pre{font-size:11.5px;padding:14px 14px}}
   .code .k{color:#8b8a84}.code .s{color:var(--amber)}.code .n{color:#9fd3ff}.code .b{color:var(--green)}
   .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:28px}
   .mini div{padding:16px 18px;border:1px solid var(--line);border-radius:16px;background:var(--card)}
@@ -418,6 +481,10 @@
     .g4{grid-template-columns:1fr 1fr}
     .feat{grid-template-columns:1fr;gap:22px}
     .feat.flip .txt{order:0}
+    .demo{grid-template-columns:1fr;gap:24px}
+    .tu{grid-template-columns:1fr}
+    .tu-side{display:none}
+    .tu-main{border-right:0}
     .split{grid-template-columns:1fr;gap:28px}
     .chain{grid-template-columns:1fr 1fr}
     .chain::before,.chain .spark{display:none}
@@ -500,7 +567,7 @@
   <div class="ambient" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
   <a class="pill" href="#investors"><span class="new" data-i="hero.new">NEW</span><span data-i="hero.pill">Seed round open</span><span class="sep">•</span><span class="lbl" data-i="hero.pill2">$3M to become the standard</span><span class="arr"><svg><use href="#i-play"/></svg></span></a>
   <h1><span data-i="hero.h1a">Creative IP,</span><br><span class="cycle" id="cycle" aria-live="off"></span></h1>
-  <p class="lead" data-i="hero.lead">Qantica connects creators with studios and platforms through QIP, a patented methodology that takes original stories from first draft to market-ready IP: analyzed against 18 narrative criteria, improved with a tutor that knows the whole script, sealed on blockchain at every step — and sold at auction to studios and platforms.</p>
+  <p class="lead" data-i="hero.lead">Qantica connects creators with studios and platforms through QIP, a patented methodology that takes original stories from first draft to market-ready IP.</p>
   <div class="cta">
     <a class="btn btn-w" href="https://qantica.com/deck" target="_blank" rel="noopener" data-i="hero.cta1">View deck</a>
     <a class="btn btn-g" href="#platform" data-i="hero.cta2">Explore the platform</a>
@@ -573,6 +640,40 @@
       <div class="win">
         <div class="bar"><i></i><i></i><i></i><span class="url">platform.qantica.com/tutor</span></div>
         <video autoplay muted loop playsinline preload="metadata" poster="img/03-49093c89.jpg" src="video/02-65c807e5.mp4"></video>
+      </div>
+    </div>
+  </div>
+
+  <div class="stack">
+    <div class="card demo glow rv" id="demo">
+      <div class="txt">
+        <span class="eyebrow" data-i="dm.eye">Interactive demo</span>
+        <h3 style="margin-top:12px" data-i="dm.h">Ask the Tutor</h3>
+        <p data-i="dm.p">Pick a question or type your own. The Tutor answers with the full context of the sample project — and, as always, sends you back to the scene instead of writing it for you.</p>
+        <div class="qchips" id="qchips" role="group" aria-label="Sample questions"></div>
+        <p class="fine" data-i="dm.fine">Demo with scripted replies from the sample project <b>Mantis</b> (52 scenes, iteration 1). The real Tutor runs inside the platform with your own script.</p>
+      </div>
+      <div class="win">
+        <div class="bar"><i></i><i></i><i></i><span class="url">platform.qantica.com/tutor</span></div>
+        <div class="tu">
+          <div class="tu-main">
+            <div class="tu-top"><span class="qm">Q</span><div><b data-i="dm.title">Chat with the Tutor</b><small>Mantis · 52 scenes · Iteration 1</small></div><div class="st"><span class="g" data-i="dm.st1">Orient</span><span class="y" data-i="dm.st2">Roadmap</span></div></div>
+            <div class="tu-log" id="tu-log" aria-live="polite">
+              <div class="tu-ai"><span class="sun"></span><div class="body" data-i="dm.hello">Let's talk about your work. I have the full context of Mantis and I'm here to help you think — not to write it for you. What should we look at?</div></div>
+            </div>
+            <form class="tu-in" id="tu-form" autocomplete="off">
+              <label class="sr" for="demo-input" data-i="dm.label">Your question about the work</label>
+              <input id="demo-input" name="q" type="text" maxlength="200" placeholder="Type your question about the work…" data-ph="dm.ph">
+              <button type="submit" id="demo-send" aria-label="Send"><svg viewBox="0 0 24 24"><path d="M4 12 20 4l-4 16-4-7-8-1Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></button>
+            </form>
+          </div>
+          <aside class="tu-side">
+            <div class="lbl" data-i="dm.go">Go to work</div>
+            <div class="sub" data-i="dm.go.sub">Destinations suggested by the Tutor</div>
+            <div class="dest" id="tu-dest"><span data-s="28">Scene 28</span><span data-s="29">Scene 29</span><span data-s="30">Scene 30</span></div>
+            <div class="done"><b>4</b> <span data-i="dm.pending">points pending · 19 resolved</span></div>
+          </aside>
+        </div>
       </div>
     </div>
   </div>
@@ -970,7 +1071,7 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
     es: {
       "nav.platform":"Plataforma","nav.protection":"Protección","nav.showcase":"Showcase","nav.studios":"Estudios","nav.investors":"Inversores","nav.contact":"Contacto","nav.cta":"Solicitar data room",
       "hero.new":"NUEVO","hero.pill":"Ronda seed abierta","hero.pill2":"$3M para ser el estándar","hero.h1a":"Propiedad intelectual,",
-      "hero.lead":"Qantica conecta a creadores con estudios y plataformas a través de QIP, una metodología patentada que lleva historias originales desde el primer borrador hasta una IP lista para el mercado: analizadas con 18 criterios narrativos, mejoradas con un tutor que conoce todo el guion, selladas en blockchain en cada paso y vendidas en subasta a estudios y plataformas.",
+      "hero.lead":"Qantica conecta a creadores con estudios y plataformas a través de QIP, una metodología patentada que lleva historias originales desde el primer borrador hasta una IP lista para el mercado.",
       "hero.cta1":"Ver el deck","hero.cta2":"Conocer la plataforma",
       "stat.1":"criterios narrativos en cada análisis","stat.2":"sellos blockchain por obra, de BC0 a BC4","stat.3":"mercado del entretenimiento en 2028, sin estándar de validación","stat.4":"ronda seed, abierta ahora",
       "sys.eye":"El sistema QIP","sys.pat":"Patentado","sys.h2":"Del primer borrador a una IP lista para el mercado",
@@ -1038,6 +1139,10 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
       "sa.b1":"Estudio · Madrid","sa.b1s":"Derechos de cine + serie","sa.b2":"Plataforma · Los Ángeles","sa.b2s":"Todos los formatos","sa.b3":"Productora · Buenos Aires","sa.b3s":"Derechos de juego",
       "sa.foot":"Pujas simuladas con fines ilustrativos · Subasta privada para compradores y socios cualificados","sa.cta":"Acceso para compradores",
       "st.c5":"Licencias para empresas, infraestructura validada con AWS",
+      "dm.eye":"Demo interactiva","dm.h":"Preguntale al Tutor","dm.p":"Elegí una pregunta o escribí la tuya. El Tutor responde con todo el contexto del proyecto de ejemplo y, como siempre, te manda de vuelta a la escena en lugar de escribirla por vos.",
+      "dm.fine":"Demo con respuestas guionadas del proyecto de ejemplo <b>Mantis</b> (52 escenas, iteración 1). El Tutor real funciona dentro de la plataforma con tu propio guion.",
+      "dm.title":"Chat con el Tutor","dm.st1":"Orientar","dm.st2":"Hoja de ruta","dm.hello":"Hablemos de tu obra. Tengo todo el contexto de Mantis y estoy para ayudarte a pensar, no para escribirla por vos. ¿Qué miramos?",
+      "dm.label":"Tu pregunta sobre la obra","dm.ph":"Escribí tu pregunta sobre la obra…","dm.go":"Ir a trabajar","dm.go.sub":"Destinos sugeridos por el Tutor","dm.pending":"puntos pendientes · 19 resueltos",
       "fq.eye":"Preguntas frecuentes","fq.h2":"Lo que nos preguntan los inversores",
       "fq.1.q":"¿Qantica es una empresa de IA generativa?","fq.1.a":"QIP analiza tu guion y guía la revisión sin escribirlo ni reescribirlo. Cada línea sigue siendo del autor. Una vez curado el guion, imágenes generadas por IA apoyan los storyboards y otros materiales visuales.",
       "fq.2.q":"¿Qué es exactamente lo patentado?","fq.2.a":"QIP, la metodología que lleva una obra a través del análisis, la iteración medida y la certificación. Es el estándar sobre el que corre la plataforma y el que licenciamos a estudios y plataformas.",
@@ -1083,6 +1188,7 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
     nodes.forEach(function(n){ var k=n.getAttribute('data-i'), v=T[l][k]; if (v!=null) n.innerHTML=v; });
     document.querySelectorAll('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-lang')===l?'true':'false'); });
     buildCycle(); startCycle();
+    if (typeof buildChips==='function') buildChips();
     document.querySelectorAll('.vbtn').forEach(function(b){ var v=b.parentNode.querySelector('video'); b.setAttribute('aria-label', (l==='es'?['Pausar video','Reproducir video']:['Pause video','Play video'])[v.paused?1:0]); });
     document.querySelectorAll('.bid[data-pool]').forEach(function(r){ var b=pool[+r.getAttribute('data-pool')]; r.querySelector('b').textContent=b[1][l]; r.querySelector('div small').textContent=b[2][l]; });
     try { localStorage.setItem('qantica-lang', l); } catch(e){}
@@ -1091,6 +1197,96 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
   var saved=null; try { saved=localStorage.getItem('qantica-lang'); } catch(e){}
   var initial = saved || 'en';
   setLang(initial);
+
+  /* ---- interactive tutor demo (scripted) ---- */
+  var DEMO = {
+    en: {
+      states:['Reviewing roadmap…','Loading characters…','Analyzing previous conversation…'],
+      goto:'Go to Scene', ctx:'Loaded context', ruleout:'Rule out', accept:'Accept', ph:'Type your question about the work…',
+      qa:[
+        {q:"What's the next aspect we should work on?", k:/next|aspect|work on|what now|start/i, scenes:[28,29,30],
+         a:"We have already consolidated the psychological justification and how to sow that vulnerability in <b>Point 1</b> through the manipulation of Axel.\n\nThe next technical step is to define the exact moment of surrender. We know that turning point occurs once they reach Xina's mansion, which places us within <b>Point 3</b> of your structure.\n\nTo avoid a jarring transition, the text needs a clear anchor: in what specific scene within the mansion does Javi's definitive breakdown occur? What is the exact action or line of dialogue that marks his shift from panic and flight to voluntary acceptance of his role?",
+         card:{t:"Existential collapse and Javi's psychology in the face of Xina's colony", tag:'Character', p:"Javi arrives at the colony with his identity fragmented after his breakup with Mónica and the loss of his support network. Faced with existential emptiness and a lack of alternatives, his primal need for belonging drives him to accept the rigid and abusive system of the 'Boys'…"}},
+        {q:"Is Javi's turn to submission believable?", k:/javi|submission|believ|credib|surrender/i, scenes:[27,28],
+         a:"Right now the turn is <b>stated but not earned</b>. Between the panic in scene 26 and the acceptance in scene 29 there is no beat where staying becomes safer than leaving.\n\nTwo questions before you rewrite anything: what does Javi still believe he can recover by staying? And who in the colony gives him the first sign of belonging?\n\nAnswer those inside one scene and the transition stops feeling abrupt.",
+         card:{t:"Incoherent psychological transition in Javi's turn toward submission", tag:'Improvement point · 4 pts', p:"The jump from panic and attempted escape to voluntarily becoming a servant lacks a solid internal justification, weakening the credibility of his arc at the end of act two."}},
+        {q:"Where does act two lose tension?", k:/tension|act two|act 2|pace|rhythm|slow|boring/i, scenes:[22,24,27],
+         a:"Your pending points cluster between <b>scenes 22 and 27</b>: three of the four sit there. The pattern repeats in each: the antagonist acts, the protagonists react, and nothing is at stake that wasn't already at stake in act one.\n\nWhich decision could Axel make in scene 24 that costs him something he can't get back?",
+         card:{t:"Rhythm and Tension · conflict progression", tag:'Block 4 · 3 pending', p:"The central conflict of the work develops and escalates coherently. Evaluation criteria: stagnant conflict, weak or ineffective antagonist, premature or easy resolution."}},
+        {q:"Which scene should I rewrite first?", k:/rewrite|first|which scene|where (do|should) i start|priorit/i, scenes:[29],
+         a:"<b>Scene 29.</b> It's the scene the other pending points depend on: once Javi's surrender is anchored there, the notes on scene 28 and the whole mansion sequence resolve almost by themselves.\n\nOpen it in Writing Mode when you're ready. I'll keep the context of this conversation.",
+         card:{t:"Int. Xina mansion / living room – night", tag:'Scene 29 · v01', p:"568 words · ~1.8 pages · last modified 31/8/2026. Preview and history available; switch to Writing Mode to edit."}},
+        {q:"Summarize the improvement points", k:/summar|points|ipi|status|pending|progress|overview/i, scenes:[12,24,29],
+         a:"<b>23 points</b> identified in iteration 1; <b>4</b> remain.\n\n• Characters — Javi's transition to submission (in progress)\n• Structure and plot — conflict progression in act two\n• Rhythm and tension — scenes 22 to 27\n• Style and tone — one dialogue in scene 12 that explains what the image already shows\n\nWhich block do you want to open?",
+         card:{t:"Improvement points by block", tag:'Iteration 1', p:"1. Structure and Plot · 2. Characters · 3. Logic and Premise · 4. Rhythm and Tension · 5. Style and Tone."}}
+      ],
+      fallback:"I have the full context of <b>Mantis</b> — 52 scenes, iteration 1, 4 pending points — and I can help you think it through, but I won't write it for you.\n\nTell me which scene or character you're working on and I'll ask you the question that unlocks it."
+    },
+    es: {
+      states:['Revisando la hoja de ruta…','Cargando personajes…','Analizando la conversación previa…'],
+      goto:'Ir a la escena', ctx:'Contexto cargado', ruleout:'Descartar', accept:'Aceptar', ph:'Escribí tu pregunta sobre la obra…',
+      qa:[
+        {q:"¿Qué aspecto trabajamos ahora?", k:/siguiente|ahora|aspecto|empez|arranc|próximo|proximo/i, scenes:[28,29,30],
+         a:"En nuestro último intercambio cerramos la justificación psicológica y cómo sembrar esa vulnerabilidad en el <b>Punto 1</b> a través de la manipulación de Axel.\n\nEl siguiente paso técnico es definir el momento exacto de la rendición. Sabemos que ese quiebre ocurre cuando llegan a la mansión de Xina, lo que nos ubica en el <b>Punto 3</b> de tu estructura.\n\nPara evitar una transición brusca, el texto necesita un ancla clara: ¿en qué escena exacta de la mansión ocurre el quiebre definitivo de Javi? ¿Cuál es la acción específica o la línea de diálogo con la que Javi pasa del pánico y la huida a aceptar su rol voluntariamente?",
+         card:{t:"Colapso existencial y psicología de Javi ante la colonia de Xina", tag:'Personaje', p:"Javi llega a la colonia con su identidad fragmentada tras la ruptura con Mónica y la pérdida de su red de apoyo. Ante el vacío existencial y la falta de alternativas, la necesidad primaria de pertenencia lo empuja a aceptar el sistema rígido y abusivo de los 'Muchachos'…"}},
+        {q:"¿Es creíble el giro de Javi hacia la sumisión?", k:/javi|sumisi|cre[ií]ble|rendici/i, scenes:[27,28],
+         a:"Hoy el giro está <b>enunciado pero no ganado</b>. Entre el pánico de la escena 26 y la aceptación de la 29 no hay ningún momento en el que quedarse sea más seguro que irse.\n\nDos preguntas antes de reescribir nada: ¿qué cree Javi que todavía puede recuperar si se queda? ¿Y quién en la colonia le da la primera señal de pertenencia?\n\nRespondé eso dentro de una sola escena y la transición deja de sentirse abrupta.",
+         card:{t:"Incoherencia en la transición psicológica de Javi hacia la sumisión", tag:'Punto de mejora · 4 pts', p:"El salto abrupto desde el pánico y el intento de huida hasta la aceptación voluntaria de convertirse en sirviente carece de una justificación interna sólida, afectando la credibilidad de su arco al final del segundo acto."}},
+        {q:"¿Dónde pierde tensión el segundo acto?", k:/tensi|segundo acto|acto 2|ritmo|lento|aburr/i, scenes:[22,24,27],
+         a:"Tus puntos pendientes se concentran entre las <b>escenas 22 y 27</b>: tres de los cuatro están ahí. El patrón se repite: el antagonista actúa, los protagonistas reaccionan, y no hay nada en juego que no estuviera ya en juego en el primer acto.\n\n¿Qué decisión podría tomar Axel en la escena 24 que le cueste algo que no pueda recuperar?",
+         card:{t:"Ritmo y tensión · progresión del conflicto", tag:'Bloque 4 · 3 pendientes', p:"El conflicto central de la obra se desarrolla y escala con coherencia. Criterios: conflicto estancado, antagonista débil o ineficaz, resolución prematura o fácil."}},
+        {q:"¿Qué escena reescribo primero?", k:/reescrib|primero|qué escena|que escena|por d[oó]nde|priori/i, scenes:[29],
+         a:"<b>La escena 29.</b> Es la escena de la que dependen los otros puntos pendientes: una vez que la rendición de Javi queda anclada ahí, las notas de la escena 28 y toda la secuencia de la mansión se resuelven casi solas.\n\nAbrila en Modo Escritura cuando quieras. Yo mantengo el contexto de esta conversación.",
+         card:{t:"Int. Mansión Xina / salón – noche", tag:'Escena 29 · v01', p:"568 palabras · ~1,8 páginas · última modificación 31/8/2026. Vista previa e historial disponibles; pasá a Modo Escritura para editar."}},
+        {q:"Resumime los puntos de mejora", k:/resum|puntos|ipi|estado|pendiente|avance|panorama/i, scenes:[12,24,29],
+         a:"<b>23 puntos</b> identificados en la iteración 1; quedan <b>4</b>.\n\n• Personajes — transición de Javi hacia la sumisión (en progreso)\n• Estructura y trama — progresión del conflicto en el segundo acto\n• Ritmo y tensión — escenas 22 a 27\n• Estilo y tono — un diálogo en la escena 12 que explica lo que la imagen ya muestra\n\n¿Qué bloque querés abrir?",
+         card:{t:"Puntos de mejora por bloque", tag:'Iteración 1', p:"1. Estructura y trama · 2. Personajes · 3. Lógica y premisa · 4. Ritmo y tensión · 5. Estilo y tono."}}
+      ],
+      fallback:"Tengo todo el contexto de <b>Mantis</b> —52 escenas, iteración 1, 4 puntos pendientes— y puedo ayudarte a pensarlo, pero no lo voy a escribir por vos.\n\nDecime en qué escena o personaje estás trabajando y te hago la pregunta que lo destraba."
+    }
+  };
+  var qchips=document.getElementById('qchips'), tlog=document.getElementById('tu-log'), tform=document.getElementById('tu-form'), tin=document.getElementById('demo-input'), tsend=document.getElementById('demo-send'), tdest=document.getElementById('tu-dest');
+  var busy=false;
+  function buildChips(){
+    var qchips=document.getElementById('qchips'), tin=document.getElementById('demo-input'); if(!qchips || !DEMO) return;
+    qchips.innerHTML='';
+    DEMO[lang].qa.forEach(function(item,i){ var b=document.createElement('button'); b.type='button'; b.textContent=item.q; b.setAttribute('aria-pressed','false'); b.addEventListener('click', function(){ if(busy) return; qchips.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false');}); b.setAttribute('aria-pressed','true'); ask(item.q, item); }); qchips.appendChild(b); });
+    tin.placeholder = DEMO[lang].ph;
+  }
+  function esc(t){ return t.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];}); }
+  function scrollLog(){ tlog.scrollTop = tlog.scrollHeight; }
+  function wait(ms){ return new Promise(function(r){ setTimeout(r, reduce?0:ms); }); }
+  function typeInto(el, html){
+    if (reduce) { el.innerHTML=html; return Promise.resolve(); }
+    var tmp=document.createElement('div'); tmp.innerHTML=html; var full=tmp.innerHTML;
+    // reveal by words while keeping tags intact: split on spaces outside tags
+    var parts=full.split(/(\s+)/), i=0;
+    return new Promise(function(res){
+      (function step(){ i=Math.min(parts.length, i+2); el.innerHTML=parts.slice(0,i).join(''); scrollLog(); if(i<parts.length) setTimeout(step,28); else res(); })();
+    });
+  }
+  function ask(text, item){
+    if (busy) return; busy=true; tsend.disabled=true;
+    var D=DEMO[lang];
+    if (!item) { for (var i=0;i<D.qa.length;i++){ if (D.qa[i].k.test(text)) { item=D.qa[i]; break; } } }
+    var me=document.createElement('div'); me.className='tu-me'; me.innerHTML='<small>'+new Date().toTimeString().slice(0,5)+'</small>'+esc(text); tlog.appendChild(me);
+    var ai=document.createElement('div'); ai.className='tu-ai'; ai.innerHTML='<span class="sun"></span><div class="body"><span class="st"><i></i><span></span></span></div>'; tlog.appendChild(ai); scrollLog();
+    var stEl=ai.querySelector('.st span'), body=ai.querySelector('.body');
+    var chain=Promise.resolve();
+    D.states.forEach(function(st){ chain=chain.then(function(){ stEl.textContent=st; return wait(650); }); });
+    chain.then(function(){ body.innerHTML=''; return typeInto(body, item?item.a:D.fallback); }).then(function(){
+      if (item) {
+        var ctx=document.createElement('div'); ctx.className='tu-ctx';
+        ctx.innerHTML='<div class="lbl">'+D.ctx+'</div><div class="go">'+item.scenes.map(function(n){return '<span>'+D.goto+' '+n+'</span>';}).join('')+'</div>'
+          +'<div class="tu-card"><div class="h"><span style="color:var(--amber)">✦</span>'+esc(item.card.t)+'<span class="tag">'+esc(item.card.tag)+'</span></div><p>'+esc(item.card.p)+'</p><div class="acts"><span>✕ '+D.ruleout+'</span><span>✓ '+D.accept+'</span></div></div>';
+        body.appendChild(ctx);
+        tdest.innerHTML=item.scenes.map(function(n){return '<span class="on">'+(lang==='es'?'Escena':'Scene')+' '+n+'</span>';}).join('');
+      }
+      scrollLog(); busy=false; tsend.disabled=false;
+    });
+  }
+  buildChips();
+  tform.addEventListener('submit', function(e){ e.preventDefault(); var t=tin.value.trim(); if(!t||busy) return; tin.value=''; qchips.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed','false');}); ask(t); });
 
   /* ---- mobile menu ---- */
   var nav=document.getElementById('nav'), burger=document.getElementById('burger');
