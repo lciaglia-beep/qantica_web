@@ -586,8 +586,8 @@
   <div class="row rv">
     <div class="stat"><b class="odo" data-v="18">18</b><small data-i="stat.1">narrative criteria in every analysis</small></div>
     <div class="stat"><b class="odo" data-v="5">5</b><small data-i="stat.2">blockchain seals per work, BC1 to BC5</small></div>
-    <div class="stat"><b class="odo" data-v="$2.8T">$2.8T</b><small data-i="stat.3">entertainment market by 2028, no validation standard</small></div>
-    <div class="stat"><b class="odo" data-v="$3M">$3M</b><small data-i="stat.4">seed round, open now</small></div>
+    <div class="stat"><b class="odo" data-v="4">4</b><small data-i="stat.3">potential formats from one script: film, series, game, music</small></div>
+    <div class="stat"><b class="odo" data-v="2">2</b><small data-i="stat.4">interactive showcases shipped</small></div>
   </div>
 </div>
 
@@ -712,6 +712,7 @@
       <div class="txt">
         <h3 data-i="sb.h">From script to storyboard, bible and game design</h3>
         <p data-i="sb.p">Every scene gets a visual. The Bible, Moodboard, Storyboard and Game Design Document (GDD) live next to the script, so a project leaves QIP as a package a studio can evaluate — not a PDF attached to an email.</p>
+        <p data-i="sb.game">QIP evaluates a script’s potential for adaptation into a game. The GDD outlines possible structures, mechanics and playable moments for a game studio to assess before committing a development team.</p>
         <div class="more">
           <span data-i="sb.m1">One image per scene, generated and synced with the script</span>
           <span data-i="sb.m2">Bible, Moodboard, Storyboard and GDD in one place</span>
@@ -991,6 +992,7 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
   <div class="faq rv">
     <details><summary><span data-i="fq.1.q">Is Qantica a generative AI company?</span><span class="pm"><svg><use href="#i-plus"/></svg></span></summary><p data-i="fq.1.a">QIP analyzes your script and guides revision without writing or rewriting it. Every line remains the author's. After the script has been curated, AI-generated images support storyboards and other visual materials.</p></details>
     <details><summary><span data-i="fq.2.q">What exactly is patented?</span><span class="pm"><svg><use href="#i-plus"/></svg></span></summary><p data-i="fq.2.a">QIP, the methodology that takes a work through analysis, measured iteration and certification. It's the standard the platform runs on and the one we license to studios and platforms.</p></details>
+    <details><summary><span data-i="fq.games.q">How does Qantica approach games?</span><span class="pm"><svg><use href="#i-plus"/></svg></span></summary><p data-i="fq.games.a">QIP evaluates the potential for adapting a script into a game and provides a GDD alongside the script, bible and storyboard. Game rights can be offered at auction, as with film or series rights. The acquiring studio develops the game.</p></details>
     <details><summary><span data-i="fq.3.q">Who owns the work and the data?</span><span class="pm"><svg><use href="#i-plus"/></svg></span></summary><p data-i="fq.3.a">The author, always. Creative content never leaves the project and is never used to train, fine-tune or improve any model. Only anonymous, aggregated metrics calibrate the analysis engine.</p></details>
     <details><summary><span data-i="fq.4.q">What goes on the blockchain?</span><span class="pm"><svg><use href="#i-plus"/></svg></span></summary><p data-i="fq.4.a">Digital fingerprints, not content: the original work (BC1), the initial diagnosis (BC2), guided questions and author responses (BC3), script revisions and scene changes (BC4) and the final certificate with its improvement metric (BC5). Anyone can verify the chain; nobody can read the script from it.</p></details>
     <details><summary><span data-i="fq.5.q">How does Qantica make money?</span><span class="pm"><svg><use href="#i-plus"/></svg></span></summary><p data-i="fq.5.a">Two paths: enterprise licensing of QIP to studios and platforms as an intake standard, and participation in successful IP sales when certified works are sold at auction. Qantica earns when the author earns.</p></details>
@@ -1003,6 +1005,7 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
   <div class="card inv glow rv">
     <span class="eyebrow" data-i="inv.eye">Seed round · Open</span>
     <h2><span data-i="inv.h2a">$3M to become</span> <em data-i="inv.h2b">the standard</em></h2>
+    <p data-i="inv.market">Global entertainment and media market projected to reach $3.4T by 2028.</p>
     <p data-i="inv.p">Platform live with active projects, two showcases shipped, patented methodology, blockchain protection in production and infrastructure validated with AWS. The technology roadmap also includes specialized LLM development. We're raising to scale enterprise licensing with studios and platforms.</p>
     <div class="proof">
       <span data-i="inv.p0">QIP · patented</span>
@@ -1069,11 +1072,15 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
   var T = {
     en: {},
     es: {
+      "sb.game":"QIP evalúa el potencial de adaptación de un guion a videojuego. El GDD plantea posibles estructuras, mecánicas y momentos jugables para que un estudio pueda evaluar el proyecto antes de comprometer un equipo de desarrollo.",
+      "fq.games.q":"¿Cómo aborda Qantica los videojuegos?",
+      "fq.games.a":"QIP evalúa el potencial de adaptación de un guion a videojuego y aporta un GDD junto al guion, la biblia y el storyboard. Los derechos de adaptación a videojuego pueden ofrecerse en subasta, como los de cine o serie. El estudio que los adquiere desarrolla el juego.",
+      "inv.market":"Mercado global de entretenimiento y medios proyectado en 3,4 billones de dólares para 2028.",
       "nav.platform":"Plataforma","nav.protection":"Protección","nav.showcase":"Showcase","nav.studios":"Estudios","nav.investors":"Inversores","nav.contact":"Contacto","nav.cta":"Solicitar data room",
       "hero.new":"NUEVO","hero.pill":"Ronda seed abierta","hero.pill2":"$3M para ser el estándar","hero.h1a":"Propiedad intelectual,",
       "hero.lead":"Qantica conecta a creadores con estudios y plataformas a través de QIP, una metodología patentada que lleva historias originales desde el primer borrador hasta una IP lista para el mercado.",
       "hero.cta1":"Ver el deck","hero.cta2":"Conocer la plataforma",
-      "stat.1":"criterios narrativos en cada análisis","stat.2":"sellos blockchain por obra, de BC1 a BC5","stat.3":"mercado del entretenimiento en 2028, sin estándar de validación","stat.4":"ronda seed, abierta ahora",
+      "stat.1":"criterios narrativos en cada análisis","stat.2":"sellos blockchain por obra, de BC1 a BC5","stat.3":"formatos potenciales desde un mismo guion: cine, serie, juego, música","stat.4":"showcases interactivos publicados",
       "sys.eye":"El sistema QIP","sys.pat":"Patentado","sys.h2":"Del primer borrador a una IP lista para el mercado",
       "sys.p":"QIP es una metodología propia perfeccionada mediante evaluaciones reiteradas de guionistas profesionales. Proporciona la base para el desarrollo de LLM especializados sobre infraestructura en la nube proporcionada por AWS. Cada proyecto sigue un proceso medido: analizar, mejorar, certificar y vender.",
       "step1.h":"Analizar","step1.p":"Una IA no generativa lee el guion contra 18 criterios narrativos y devuelve una lista priorizada de Puntos de Mejora: el IPI.","step1.t":"Resultado: puntaje IPI + lista de puntos de mejora",
