@@ -383,6 +383,7 @@
   .sale-steps p{color:var(--muted);font-size:14.5px;margin-top:2px}
 
   /* showcase */
+  #showcase{scroll-margin-top:88px}
   .show .card{padding:0;display:flex;flex-direction:column}
   .show .card .body{padding:28px 30px 30px}
   .show video{width:100%;aspect-ratio:1280/622;object-fit:cover;display:block;border-bottom:1px solid var(--line);filter:brightness(.92);transition:filter .5s,transform .8s}
@@ -391,6 +392,7 @@
   .show h3{font-size:26px}
   .show .body p{color:var(--muted);font-size:16.5px;margin-top:8px;flex:1}
   .show .body .btn{margin-top:22px;align-self:flex-start}
+  .showcase-access .btn svg{width:14px;height:14px;flex:none}
   .powered{margin-left:auto;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2);font-weight:600}
   .powered b{color:var(--amber)}
 
@@ -461,6 +463,7 @@
   footer li a:hover{color:var(--text)}
   footer .fine{color:var(--muted-2);font-size:13.5px;margin-top:14px;max-width:340px;line-height:1.5}
   footer .bottom{grid-column:1/-1;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:24px;padding-top:24px;border-top:1px solid var(--line);color:var(--muted-2);font-size:13px}
+  footer .showcase-access{grid-column:1/-1;display:flex;justify-content:center}
 
   /* reveal */
   .rv{transition:transform .8s cubic-bezier(.2,.8,.2,1),opacity .8s}
@@ -888,6 +891,12 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
       </div>
     </div>
   </div>
+  <div class="cta showcase-access">
+    <a class="btn btn-y" href="/showcases/">
+      <span data-i="sh.cta">Showcase</span>
+      <svg viewBox="0 0 12 12" aria-hidden="true"><use href="#i-arrow"/></svg>
+    </a>
+  </div>
 </section>
 
 <!-- ================= ONE STANDARD (studios) ================= -->
@@ -1039,7 +1048,7 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
         <li><a href="#protection" data-i="ft.prot">Work protection</a></li>
         <li><a href="#sale" data-i="ft.sale">Auction</a></li>
         <li><a href="#studios" data-i="ft.std">For studios</a></li>
-        <li><a href="#showcase" data-i="ft.show">Showcase</a></li>
+        <li><a href="/showcases/" data-i="ft.show">Showcase</a></li>
       </ul>
     </div>
     <div>
@@ -1061,6 +1070,12 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
     <div class="bottom">
       <span data-i="ft.copy">© 2026 Qantica Inc. All rights reserved. QIP is a patented methodology.</span>
       <span data-i="ft.tag">Your work is yours. And yours alone.</span>
+    </div>
+    <div class="showcase-access">
+      <a class="btn btn-y" href="/showcases/">
+        <span data-i="sh.cta">Showcase</span>
+        <svg viewBox="0 0 12 12" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
     </div>
   </div>
 </footer>
@@ -1120,7 +1135,7 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
       "sh.m.chip":"Película · Disco · Videojuego","sh.powered":"Powered by <b>Qantica</b>",
       "sh.m.p":"Un universo en tres formatos. Una señal conecta cine, música y juego dentro del mundo de Xina Mora, y el público entra desde su celular.",
       "sh.f.chip":"Dramedia negra · 6 × 35′","sh.f.p":"Una fumigadora familiar en quiebra en Buenos Aires empieza a aceptar encargos mucho más letales. Comedia primero, drama siempre.",
-      "sh.open":"Abrir el Showcase",
+      "sh.open":"Abrir el Showcase","sh.cta":"Showcase",
       "st.eye":"Para estudios y plataformas","st.h2a":"Un estándar.","st.h2b":"Todos los formatos.",
       "st.p":"Cine, series, juegos y música bajo un criterio común para evaluar proyectos. Cada material llega analizado, iterado y certificado, con un registro verificable de quién escribió qué, ayudando a los equipos de adquisición a comparar proyectos y priorizar su revisión.",
       "st.c1":"Delta de IPI verificable en cada obra certificada","st.c2":"Prueba de autoría humana sellada en cadena (BC1–BC5)","st.c3":"Biblia, storyboard y GDD entregados con el guion","st.c4":"Acceso de comprador a la subasta de obras certificadas",
