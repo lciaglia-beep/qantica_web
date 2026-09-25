@@ -25,7 +25,7 @@
 <meta name="twitter:description" content="Qantica transforms stories into protected, market-ready intellectual property for film, television, and games.">
 <meta name="twitter:image" content="https://qantica.com/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Archivo:wght@800;900&family=Courier+Prime:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Archivo:wght@500;600;700;800;900&family=Courier+Prime:wght@400;700&display=swap">
 <style>
   :root{
     --bg:#000000;
@@ -509,6 +509,29 @@
     .win .url{display:none}
     .pill .sep,.pill .lbl{display:none}
   }
+
+  /* The teaser is isolated from the landing styles and created only when opened. */
+  .overview-trigger svg{width:14px;height:14px;flex:none}
+  .overview-dialog{width:min(1100px,calc(100% - 32px),calc((100dvh - 176px)*16/9));max-height:calc(100dvh - 32px);padding:0;border:1px solid var(--line-2);border-radius:24px;background:#0f0f0e;color:var(--text);box-shadow:0 32px 120px rgba(0,0,0,.75);overflow:auto;overscroll-behavior:contain}
+  .overview-dialog[open]{display:flex;flex-direction:column}
+  .overview-dialog::backdrop{background:rgba(0,0,0,.84);backdrop-filter:blur(8px)}
+  .overview-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;flex:none}
+  .overview-head h2{font-size:18px;font-weight:600}
+  .overview-close{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:10px 14px;border:1px solid var(--line-2);border-radius:999px;background:transparent;color:var(--text);font:inherit;font-size:14px;cursor:pointer}
+  .overview-close:hover{background:#262624}
+  .overview-screen{background:#030303;flex:none;aspect-ratio:16/9}
+  .overview-mount{display:block;width:100%;height:100%;aspect-ratio:16/9;border:0}
+  .overview-actions{display:flex;align-items:center;justify-content:center;padding:8px 20px;flex:none}
+  .overview-secondary{display:inline-flex;align-items:center;min-height:44px;font-size:15px;font-weight:600;color:var(--text);text-decoration:underline;text-underline-offset:5px}
+  .overview-secondary:hover{color:var(--amber)}
+  @media(max-width:640px) and (orientation:portrait){
+    .overview-dialog{width:min(calc(100% - 20px),calc((100dvh - 176px)*9/16));max-height:calc(100dvh - 20px);border-radius:18px}
+    .overview-head{padding:10px 12px;gap:8px}
+    .overview-head h2{font-size:15px}
+    .overview-close{padding:10px;font-size:13px}
+    .overview-screen,.overview-mount{aspect-ratio:9/16}
+    .overview-actions{padding:8px 12px}
+  }
 </style>
 </head>
 <body>
@@ -572,6 +595,10 @@
   <h1><span data-i="hero.h1a">Creative IP,</span><br><span class="cycle" id="cycle" aria-live="off"></span></h1>
   <p class="lead" data-i="hero.lead">Qantica connects creators with studios and platforms through QIP, a patented methodology that takes original stories from first draft to market-ready IP.</p>
   <div class="cta">
+    <button class="btn btn-y overview-trigger" type="button" id="overview-open" aria-haspopup="dialog" aria-controls="overview-dialog">
+      <svg viewBox="0 0 12 12" aria-hidden="true"><use href="#i-play"/></svg>
+      <span data-i="overview.watch">Watch the overview · 1 min</span>
+    </button>
     <a class="btn btn-w" href="https://qantica.com/deck" target="_blank" rel="noopener" data-i="hero.cta1">View deck</a>
     <a class="btn btn-g" href="#platform" data-i="hero.cta2">Explore the platform</a>
   </div>
@@ -1080,6 +1107,143 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
   </div>
 </footer>
 
+
+<dialog class="overview-dialog" id="overview-dialog" aria-labelledby="overview-title">
+  <header class="overview-head">
+    <h2 id="overview-title" data-i="overview.title">Qantica overview</h2>
+    <button class="overview-close" type="button" id="overview-close" autofocus><span data-i="overview.close">Close</span><span aria-hidden="true">×</span></button>
+  </header>
+  <div class="overview-screen" id="overview-screen"></div>
+  <div class="overview-actions">
+    <a class="overview-secondary" href="/showcase/" data-i="overview.showcase">Explore Showcase</a>
+  </div>
+</dialog>
+<template id="overview-template">
+<!-- ============================================================
+     QANTICA TEASER · bloque autocontenido para incrustar en la landing
+     - Todo va aislado bajo #qantica-teaser (no pisa tu CSS)
+     - Se reproduce solo al entrar en pantalla; botón de sonido y replay incluidos
+     - Ocupa el 100% del ancho del contenedor (máx. 1180px); 16:9 en escritorio y 9:16 en móvil
+     - Recomendado: colocarlo sobre un fondo oscuro (el escenario es negro)
+     Las 3 líneas  de fuentes pueden ir en el <head>; si no, aquí también funcionan.
+     ============================================================ -->
+
+
+
+<style>
+  #qantica-teaser{--qx-amber:#EFAC39;--qx-text:#f4f3ef;--qx-font:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--qx-wm:"Archivo","Helvetica Neue",Helvetica,Arial,sans-serif;--qx-mono:"Courier Prime","Courier New",Courier,monospace;
+    width:100%;max-width:1180px;margin:0 auto;color:var(--qx-text);font-family:var(--qx-font);line-height:1.2;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+  #qantica-teaser *,#qantica-teaser *::before,#qantica-teaser *::after{box-sizing:border-box}
+  #qantica-teaser .qxt-stage{position:relative;display:block;width:min(100%, calc(92vh * 16 / 9));width:min(100%, calc(92svh * 16 / 9));aspect-ratio:16/9;margin:0 auto;border-radius:24px;overflow:hidden;border:1px solid #232321;background:#030303;box-shadow:0 30px 80px -30px rgba(239,172,57,.18);isolation:isolate;-webkit-user-select:none;user-select:none;touch-action:manipulation}
+  #qantica-teaser .qxt-stage.m{aspect-ratio:9/16;width:min(100%, calc(84vh * 9 / 16));width:min(100%, calc(84svh * 9 / 16));border-radius:18px}
+  @supports not (aspect-ratio:1){#qantica-teaser .qxt-stage{height:0;padding-top:56.25%}#qantica-teaser .qxt-stage.m{padding-top:177.78%}#qantica-teaser .qxt-stage svg{position:absolute;inset:0}}
+  #qantica-teaser .qxt-stage svg{display:block;width:100%;height:100%;max-width:none;overflow:hidden}
+  #qantica-teaser .qxt-grain{position:absolute;inset:-50%;pointer-events:none;opacity:.06;mix-blend-mode:screen;background-size:180px 180px}
+  #qantica-teaser .qxt-vignette{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%)}
+  #qantica-teaser .qxt-btn{position:absolute;top:12px;appearance:none;-webkit-appearance:none;margin:0;border:1px solid rgba(244,243,239,.25);background:rgba(10,10,9,.72);color:var(--qx-text);border-radius:999px;padding:8px 14px 8px 11px;font:600 13px/1 var(--qx-font);display:inline-flex;gap:8px;align-items:center;cursor:pointer;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:2;min-height:36px;text-transform:none;letter-spacing:0}
+  #qantica-teaser .qxt-btn svg{width:16px;height:16px;flex:none}
+  #qantica-teaser .qxt-snd{right:12px}
+  #qantica-teaser .qxt-snd.on{border-color:var(--qx-amber);color:var(--qx-amber)}
+  #qantica-teaser .qxt-replay{left:12px;background:#fff;color:#000;border-color:#fff}
+  #qantica-teaser .qxt-replay[hidden]{display:none!important}
+  @media (max-height:520px), (max-width:420px){#qantica-teaser .qxt-btn{padding:7px 9px;min-height:32px;top:8px;font-size:12px}#qantica-teaser .qxt-snd{right:8px}#qantica-teaser .qxt-replay{left:8px}}
+  @media (max-height:520px){#qantica-teaser .qxt-btn span{display:none}}
+  #qantica-teaser .qxt-btn:focus-visible{outline:2px solid var(--qx-amber);outline-offset:3px}
+  #qantica-teaser svg.m .dsk{display:none}
+  #qantica-teaser svg:not(.m) .mob{display:none}
+  #qantica-teaser .scene text{pointer-events:none}
+  #qantica-teaser .eyebrow{font-family:var(--qx-mono);font-size:17px;fill:var(--qx-amber);letter-spacing:.16em}
+  #qantica-teaser .title{font-family:var(--qx-wm);font-weight:700;font-size:50px;fill:var(--qx-text);letter-spacing:-.015em}
+  #qantica-teaser .mob .title{font-size:40px}
+  #qantica-teaser .mono{font-family:var(--qx-mono);font-size:15px;fill:var(--qx-text)}
+  #qantica-teaser .monob{font-family:var(--qx-mono);font-weight:700}
+  #qantica-teaser .lbl{font-family:var(--qx-font);font-weight:600;font-size:21px;fill:var(--qx-text)}
+  #qantica-teaser .sub{font-family:var(--qx-font);font-size:15px;fill:#8b8a84}
+  #qantica-teaser .big{font-family:var(--qx-wm);font-weight:700;fill:var(--qx-text)}
+  #qantica-teaser .ink{fill:none;stroke:#f4f3ef;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+  #qantica-teaser .inkf{fill:#0f0f0e;stroke:#f4f3ef;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+  #qantica-teaser .mut{stroke:#8b8a84}
+  #qantica-teaser .amb{stroke:#EFAC39}
+  #qantica-teaser .grn{stroke:#3CD98A}
+  #qantica-teaser .thin{stroke-width:2.6}
+  #qantica-teaser [data-a="pop"],#qantica-teaser [data-a="slam"]{transform-box:fill-box;transform-origin:center}
+  #qantica-teaser .hit{fill:transparent;cursor:pointer;pointer-events:all}
+  #qantica-teaser .tap,#qantica-teaser .cta{cursor:pointer}
+</style>
+<div id="qantica-teaser">
+  <div class="qxt-stage" id="qxt-stage">
+    <svg id="qxt-qxStage" viewBox="0 0 1280 720" role="img" aria-label="Qantica teaser: creators apply with their work and professional background, QIP filters and approves scripts, writers join the community, Qantica and its satellites build the package until it is ready for showcase, the public explores and follows stories, members unlock more, possible paths for each project, and Qantica earns through enterprise licensing and participation in successful IP deals">
+      <defs>
+        <filter id="qxt-rough" x="-3%" y="-3%" width="106%" height="106%">
+          <feTurbulence id="qxt-turb" type="fractalNoise" baseFrequency="0.022" numOctaves="2" seed="1" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="4.5" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <filter id="qxt-rough2" x="-3%" y="-3%" width="106%" height="106%">
+          <feTurbulence id="qxt-turb2" type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="2" result="n"/>
+          <feDisplacementMap in="SourceGraphic" in2="n" scale="2" xChannelSelector="R" yChannelSelector="G"/>
+        </filter>
+        <radialGradient id="qxt-glow" cx="50%" cy="8%" r="75%">
+          <stop offset="0" stop-color="#EFAC39" stop-opacity=".22"/>
+          <stop offset=".5" stop-color="#EFAC39" stop-opacity=".04"/>
+          <stop offset="1" stop-color="#EFAC39" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="qxt-agl"><stop offset="0" stop-color="#EFAC39" stop-opacity=".45"/><stop offset="1" stop-color="#EFAC39" stop-opacity="0"/></radialGradient>
+        <radialGradient id="qxt-ggl"><stop offset="0" stop-color="#3CD98A" stop-opacity=".5"/><stop offset="1" stop-color="#3CD98A" stop-opacity="0"/></radialGradient>
+        <linearGradient id="qxt-gateGlow" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#EFAC39" stop-opacity=".05"/>
+          <stop offset="1" stop-color="#EFAC39" stop-opacity=".45"/>
+        </linearGradient>
+        <linearGradient id="qxt-gold" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#F8D27A"/><stop offset=".45" stop-color="#EFAC39"/><stop offset="1" stop-color="#C6832A"/>
+        </linearGradient>
+        <linearGradient id="qxt-shine" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="qxt-beam" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#3CD98A" stop-opacity="0"/><stop offset=".5" stop-color="#3CD98A" stop-opacity=".9"/><stop offset="1" stop-color="#3CD98A" stop-opacity="0"/>
+        </linearGradient>
+        <pattern id="qxt-hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="9" stroke="#EFAC39" stroke-width="2.2" opacity=".55"/>
+        </pattern>
+        <pattern id="qxt-hatchD" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="10" stroke="#1a1206" stroke-width="2" opacity=".18"/>
+        </pattern>
+        <pattern id="qxt-hatchG" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+          <line x1="0" y1="0" x2="0" y2="9" stroke="#3CD98A" stroke-width="2" opacity=".45"/>
+        </pattern>
+        <clipPath id="qxt-cardClip"><rect x="430" y="110" width="420" height="260" rx="24"/></clipPath>
+      </defs>
+      <rect x="-400" y="-400" width="2080" height="1760" fill="#030303"/>
+      <rect id="qxt-bgGlow" width="1280" height="720" fill="url(#qxt-glow)"/>
+      <g id="qxt-dust"></g>
+      <g id="qxt-scenes"></g>
+      <rect id="qxt-flash" x="-400" y="-400" width="2080" height="1760" fill="#3CD98A" opacity="0" pointer-events="none"/>
+      <g id="qxt-wordmark" class="dsk"><text class="big" x="44" y="76" style="font-size:22px;font-weight:800;letter-spacing:.02em">QANTICA<tspan style="fill:#EFAC39"> .</tspan></text></g>
+      <g id="qxt-bars" pointer-events="none">
+        <rect id="qxt-barT" x="-400" y="-400" width="2080" height="434" fill="#000"/>
+        <rect id="qxt-barB" x="-400" y="686" width="2080" height="700" fill="#000"/>
+      </g>
+    </svg>
+    <div class="qxt-grain" id="qxt-grain"></div>
+    <div class="qxt-vignette"></div>
+    <button class="qxt-btn qxt-snd" id="qxt-snd" type="button" aria-pressed="false">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path id="qxt-sndWave" d="M11 5.5c1 .8 1 4.2 0 5M13 3.5c2 1.8 2 7.2 0 9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".35"/></svg>
+      <span id="qxt-sndLbl">Sound off</span>
+    </button>
+    <button class="qxt-btn qxt-replay" id="qxt-replay" type="button" hidden>
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 8a5 5 0 1 0 1.6-3.7M3 2v3h3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>Replay
+    </button>
+  </div>
+</div>
+
+
+<style>
+  :host{display:block;width:100%;height:100%;color-scheme:dark}
+  #qantica-teaser{height:100%;max-width:none}
+  #qantica-teaser .qxt-stage,#qantica-teaser .qxt-stage.m{width:100%;height:100%;aspect-ratio:auto;margin:0;border:0;border-radius:0;box-shadow:none}
+</style>
+</template>
+
 <script>
 (function(){
   var pool;
@@ -1095,6 +1259,7 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
       "hero.new":"NUEVO","hero.pill":"Ronda seed abierta","hero.pill2":"$3M para ser el estándar","hero.h1a":"Propiedad intelectual,",
       "hero.lead":"Qantica conecta a creadores con estudios y plataformas a través de QIP, una metodología patentada que lleva historias originales desde el primer borrador hasta una IP lista para el mercado.",
       "hero.cta1":"Ver el deck","hero.cta2":"Conocer la plataforma",
+      "overview.watch":"Ver el resumen · 1 min","overview.title":"Qantica en un minuto","overview.close":"Cerrar","overview.showcase":"Explorar Showcase",
       "stat.1":"criterios narrativos en cada análisis","stat.2":"sellos blockchain por obra, de BC1 a BC5","stat.3":"ingresos previstos de la industria global del entretenimiento y los medios para 2028","stat.4":"showcases interactivos publicados",
       "sys.eye":"El sistema QIP","sys.pat":"Patentado","sys.h2":"Del primer borrador a una IP lista para el mercado",
       "sys.p":"QIP es una metodología propia perfeccionada mediante evaluaciones reiteradas de guionistas profesionales. Proporciona la base para el desarrollo de LLM especializados sobre infraestructura en la nube proporcionada por AWS. Cada proyecto sigue un proceso medido: analizar, mejorar, certificar y vender.",
@@ -1424,6 +1589,1144 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
     io2.observe(ipi);
     ipi.parentNode.addEventListener('mouseenter', function(){ ipi.classList.remove('run'); void ipi.offsetWidth; ipi.classList.add('run'); });
   }
+})();
+</script>
+
+<script>
+
+function mountQanticaTeaser(shadow) {
+  let disposed = false, animationId = 0, grainTimer = null, resizeObserver = null;
+  const DUR = 60;
+  const NS = 'http://www.w3.org/2000/svg';
+  const ROOT = shadow.getElementById('qantica-teaser');
+  const svg = shadow.getElementById('qxt-qxStage');
+  const COARSE = !!(window.matchMedia && window.matchMedia('(pointer: coarse)').matches);
+  const $ = id => shadow.getElementById(id);
+  const E = (tag, attrs, parent) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (attrs.class && /\bink/.test(attrs.class)) { if (attrs.fill) e.style.fill = attrs.fill; if (attrs.stroke) e.style.stroke = attrs.stroke; }
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const T = (parent, x, y, str, cls, style, anchor) => {
+    const t = E('text', { x, y, class: cls || '', style: style || '' }, parent);
+    if (anchor) t.setAttribute('text-anchor', anchor);
+    t.textContent = str; return t;
+  };
+  const A = (el, a, t, d, o) => { el.setAttribute('data-a', a); el.setAttribute('data-t', t); el.setAttribute('data-d', d); if (o !== undefined) el.setAttribute('data-o', o); return el; };
+  const clamp = (v, a = 0, b = 1) => v < a ? a : v > b ? b : v;
+  const eo = r => 1 - Math.pow(1 - r, 3);
+  const eio = r => r < .5 ? 4 * r * r * r : 1 - Math.pow(-2 * r + 2, 3) / 2;
+  const bo = r => { const c1 = 1.70158, c3 = c1 + 1; return 1 + c3 * Math.pow(r - 1, 3) + c1 * Math.pow(r - 1, 2); };
+  const kf = (keys, lt) => {
+    if (lt <= keys[0][0]) return [keys[0][1], keys[0][2]];
+    for (let k = 0; k < keys.length - 1; k++) {
+      const [t0, x0, y0] = keys[k], [t1, x1, y1] = keys[k + 1];
+      if (lt <= t1) { const u = (lt - t0) / (t1 - t0), q = u * u * (3 - 2 * u); return [x0 + (x1 - x0) * q, y0 + (y1 - y0) * q]; }
+    }
+    const l = keys[keys.length - 1]; return [l[1], l[2]];
+  };
+  let MOB = false;
+  const HEART = 'M0 10 C -16 -2 -12 -16 -3 -13 C -1 -12 0 -9 0 -8 C 0 -9 1 -12 3 -13 C 12 -16 16 -2 0 10 Z';
+  const NSS = { 'vector-effect': 'non-scaling-stroke' };
+  const INK = Object.assign({ stroke: '#f4f3ef', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, NSS);
+  const G = '#3CD98A', AM = '#EFAC39', RD = '#E5455F', TX = '#f4f3ef', MU = '#8b8a84';
+  const rough = p => E('g', { filter: 'url(#qxt-rough)' }, p);
+  const FONT = 'font-family:var(--qx-font);';
+
+  const PH = [
+    { name: 'Writers', s: 0 }, { name: 'Profile', s: 7 }, { name: 'QIP', s: 12 }, { name: 'Community', s: 22 },
+    { name: 'Package', s: 28 }, { name: 'Showcase', s: 35 }, { name: 'Routes', s: 44 }, { name: 'Model', s: 51 }, { name: 'Qantica', s: 56 }
+  ];
+
+  /* ---------- building blocks ---------- */
+  const blocks = [];
+  const B = (parent, m, cls) => { const g = E('g', cls ? { class: cls } : {}, parent); g._m = m; blocks.push(g); return g; };
+  const scenesRoot = $('qxt-scenes');
+  const SC = [];
+  function mkScene(s, e) {
+    const el = E('g', { class: 'scene', 'data-s': s, 'data-e': e }, scenesRoot);
+    const cam = E('g', {}, el);
+    const caps = E('g', {}, el);
+    const o = { el, cam, caps, s, e }; SC.push(o); return o;
+  }
+  function captions(S, list) {
+    list.forEach(c => {
+      const g = A(E('g', {}, S.caps), 'cap', c.t, .6, c.o === undefined ? 999 : c.o);
+      // desktop: one or two lines (c.d string or array), optional font size c.fs
+      const d = E('g', { class: 'dsk' }, g);
+      const dl = Array.isArray(c.d) ? c.d : [c.d];
+      const dfs = c.fs || 50, dlh = Math.round(dfs * 1.12);
+      const dy0 = 646 - (dl.length - 1) * dlh;
+      T(d, 80, dy0 - 56, c.ey, 'eyebrow');
+      dl.forEach((s, i) => { const tt = T(d, 80, dy0 + i * dlh, s, 'title', `font-size:${dfs}px`); if (i === dl.length - 1) E('tspan', { style: 'fill:#EFAC39' }, tt).textContent = '.'; });
+      // mobile: two or three lines (c.m array), optional font size c.mfs
+      const m = E('g', { class: 'mob' }, g);
+      const mfs = c.mfs || 40, mlh = Math.round(mfs * 1.2);
+      const my0 = 890 - (c.m.length - 1) * mlh;
+      T(m, 32, my0 - 50, c.ey, 'eyebrow');
+      c.m.forEach((s, i) => { const tt = T(m, 32, my0 + i * mlh, s, 'title', `font-size:${mfs}px`); if (i === c.m.length - 1) E('tspan', { style: 'fill:#EFAC39' }, tt).textContent = '.'; });
+    });
+  }
+  const pill = (parent, x, y, w, h, fill, label, tstyle) => {
+    E('rect', { x, y, width: w, height: h, rx: h / 2, fill }, parent);
+    return T(parent, x + w / 2, y + h / 2 + 6, label, '', tstyle, 'middle');
+  };
+  const chipW = label => 30 + label.length * 8.4;
+  const chip = (parent, x, y, label, color, center) => {
+    const w = chipW(label); if (center) x -= w / 2;
+    E('rect', { x, y, width: w, height: 32, rx: 16, fill: color === G ? 'rgba(60,217,138,.12)' : color === AM ? 'rgba(239,172,57,.12)' : '#161614', stroke: color, 'stroke-width': 2 }, parent);
+    T(parent, x + w / 2, y + 21, label, 'monob', `font-size:14px;fill:${color}`, 'middle');
+    return w;
+  };
+  const check = (parent, cx, cy, r, col) => {
+    E('circle', { cx, cy, r, fill: col || G }, parent);
+    E('path', { d: `M${cx - r * .45} ${cy} l ${r * .32} ${r * .32} l ${r * .62} ${r * .66 * -1}`, fill: 'none', stroke: '#000', 'stroke-width': Math.max(2.4, r * .22), 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, parent);
+  };
+  function makeCursor(scene, keys, clicks, stay) {
+    const g = E('g', { opacity: 0 }, scene);
+    const rip = E('circle', { r: 0, fill: 'none', stroke: AM, 'stroke-width': 3 }, g);
+    const arrow = E('path', { d: 'M0 0 L 0 30 L 8 23 L 14 36 L 20 33 L 14 21 L 25 21 Z', fill: TX, stroke: '#050505', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
+    return { g, rip, arrow, keys, clicks, stay };
+  }
+  function updCursor(c, lt) {
+    const [x, y] = kf(c.keys, lt);
+    const first = c.keys[0][0], lastK = c.keys[c.keys.length - 1][0];
+    const vis = clamp((lt - first + 0.3) / 0.3) * (c.stay ? 1 : 1 - clamp((lt - lastK) / 0.4));
+    c.g.setAttribute('transform', `translate(${x.toFixed(1)} ${y.toFixed(1)})`);
+    c.g.setAttribute('opacity', vis.toFixed(3));
+    let press = 1, rr = 0, ro = 0;
+    c.clicks.forEach(ct => { const d = lt - ct; if (d >= 0 && d < 0.5) { rr = 6 + 44 * d; ro = 1 - d / 0.5; } if (d >= 0 && d < 0.16) press = 0.82; });
+    c.arrow.setAttribute('transform', `scale(${press})`);
+    c.rip.setAttribute('r', rr.toFixed(1)); c.rip.setAttribute('opacity', ro.toFixed(3));
+  }
+  const pressScale = (lt, ct) => { const d = lt - ct; return d >= 0 && d < 0.25 ? 1 - 0.08 * Math.sin(Math.PI * d / 0.25) : 1; };
+  const scaleAbout = (el, cx, cy, k) => el.setAttribute('transform', `translate(${cx} ${cy}) scale(${k}) translate(${-cx} ${-cy})`);
+
+  const HAIRS = [AM, TX, '#C6832A', MU, AM, '#f4f3ef', '#C6832A', MU];
+  function head(parent, x, y, r, hairCol, style) {
+    E('circle', { cx: x, cy: y, r, class: 'inkf' }, parent);
+    if (style === 1) E('path', { d: `M${x - r} ${y + r * .2} C ${x - r * 1.1} ${y - r * 1.3} ${x + r * 1.1} ${y - r * 1.3} ${x + r} ${y + r * .2} L ${x + r * .7} ${y - r * .3} C ${x + r * .2} ${y - r * .6} ${x - r * .3} ${y - r * .6} ${x - r * .7} ${y - r * .3} Z`, fill: hairCol, class: 'ink thin' }, parent);
+    else if (style === 2) E('path', { d: `M${x - r * 1.05} ${y - r * .35} Q ${x} ${y - r * 1.55} ${x + r * 1.05} ${y - r * .45} Q ${x} ${y - r * .75} ${x - r * 1.05} ${y - r * .35} Z`, fill: hairCol, class: 'ink thin' }, parent);
+    else E('path', { d: `M${x - r} ${y - r * .1} C ${x - r} ${y - r * 1.15} ${x + r * .75} ${y - r * 1.3} ${x + r} ${y - r * .3} C ${x + r * .55} ${y - r * .55} ${x - r * .15} ${y - r * .6} ${x - r * .6} ${y - r * .25} Z`, fill: hairCol, class: 'ink thin' }, parent);
+    E('circle', { cx: x + r * .18, cy: y + r * .08, r: Math.max(1.8, r * .1), fill: TX }, parent);
+    E('circle', { cx: x + r * .56, cy: y + r * .08, r: Math.max(1.8, r * .1), fill: TX }, parent);
+    E('path', { d: `M${x + r * .1} ${y + r * .45} q ${r * .25} ${r * .2} ${r * .5} 0`, class: 'ink thin' }, parent);
+  }
+  function walker(parent, hairCol, style, badge) {
+    const g = E('g', {}, parent);
+    const inner = E('g', {}, g);
+    const armB = E('path', { class: 'ink', d: '' }, inner);
+    const legs = E('path', { class: 'ink', d: '' }, inner);
+    E('path', { d: 'M-17 -98 Q 0 -108 17 -98 L 15 -50 Q 0 -44 -15 -50 Z', class: 'inkf' }, inner);
+    if (badge) { E('circle', { cx: 0, cy: -76, r: 11, fill: AM }, inner); T(inner, 0, -71, 'Q', 'big', 'font-size:14px;font-weight:800;fill:#000', 'middle'); }
+    else E('rect', { x: 6, y: -88, width: 20, height: 26, rx: 2, fill: AM, stroke: TX, 'stroke-width': 2, transform: 'rotate(8 16 -75)' }, inner);
+    head(inner, 0, -124, 21, hairCol, style);
+    const armF = E('path', { class: 'ink', d: '' }, inner);
+    return { g, inner, legs, armB, armF };
+  }
+  function pose(w, ph, moving) {
+    const s = moving ? Math.sin(ph) : 0;
+    const l1 = 5 + s * 17, l2 = -5 - s * 17;
+    w.legs.setAttribute('d', `M4 -50 L ${l1.toFixed(1)} 0 L ${(l1 + 9).toFixed(1)} 0 M -4 -50 L ${l2.toFixed(1)} 0 L ${(l2 + 9).toFixed(1)} 0`);
+    w.armF.setAttribute('d', `M9 -92 L ${(12 - s * 15).toFixed(1)} -58`);
+    w.armB.setAttribute('d', `M-9 -92 L ${(-12 + s * 15).toFixed(1)} -58`);
+    w.inner.setAttribute('transform', `translate(0 ${(-Math.abs(s) * 3).toFixed(1)})`);
+  }
+
+  /* =========================================================
+     SCENE 0 · CREATORS ARRIVE / PROFILE REVIEW  (0 – 7.3)
+     ========================================================= */
+  const S0 = mkScene(0, 7.3);
+  const b0 = B(S0.cam, 'translate(-235 287.5) scale(.75)');
+  const f0 = rough(b0);
+  A(E('path', { d: 'M-80 470 L 1280 470', class: 'ink mut thin' }, f0), 'draw', .3, 1.0);
+  E('ellipse', { cx: 1090, cy: 470, rx: 150, ry: 16, fill: 'url(#qxt-agl)' }, b0);
+  const gateGlow = E('rect', { x: 902, y: 200, width: 76, height: 270, fill: 'url(#qxt-gateGlow)', opacity: .4 }, b0);
+  const gate = A(E('g', {}, rough(b0)), 'draw', .4, .9);
+  E('rect', { x: 880, y: 200, width: 22, height: 270, rx: 4, class: 'inkf' }, gate);
+  E('rect', { x: 978, y: 200, width: 22, height: 270, rx: 4, class: 'inkf' }, gate);
+  E('path', { d: 'M868 204 Q 940 128 1012 204', class: 'ink' }, gate);
+  E('path', { d: 'M940 166 L 940 172', class: 'ink thin' }, gate);
+  const gateTop = A(E('g', {}, b0), 'fade', .9, .5);
+  const wmG = T(gateTop, 940, 94, 'QANTICA', 'big', 'font-size:28px;font-weight:800;letter-spacing:.04em', 'middle');
+  E('tspan', { style: 'fill:#EFAC39' }, wmG).textContent = '.';
+  E('rect', { x: 868, y: 106, width: 144, height: 28, rx: 14, fill: '#161614', stroke: AM, 'stroke-width': 2 }, gateTop);
+  T(gateTop, 940, 125, 'PROFILE REVIEW', 'monob', 'font-size:13px;fill:#EFAC39;letter-spacing:.1em', 'middle');
+  const lamp = E('circle', { cx: 940, cy: 182, r: 10, fill: '#30302c', stroke: TX, 'stroke-width': 2.6 }, b0);
+  const REJS = [2, 5];
+  const bgW = E('g', { opacity: .3 }, b0);
+  const bgWalkers = [];
+  for (let k = 0; k < 11; k++) { const w = walker(bgW, HAIRS[(k + 3) % HAIRS.length], k % 3); bgWalkers.push(w); }
+  const NW = 8;
+  const writers = [];
+  for (let i = 0; i < NW; i++) {
+    const w = walker(b0, HAIRS[i % HAIRS.length], i % 3);
+    const c = E('g', { opacity: 0 }, b0);
+    const ok = !REJS.includes(i);
+    const lab = ok ? 'Profile ✓' : 'Incomplete profile';
+    const cw = chipW(lab);
+    E('rect', { x: -cw / 2, y: -16, width: cw, height: 32, rx: 16, fill: ok ? 'rgba(60,217,138,.14)' : 'rgba(229,69,95,.14)', stroke: ok ? G : RD, 'stroke-width': 2 }, c);
+    T(c, 0, 5, lab, 'monob', `font-size:14px;fill:${ok ? G : RD}`, 'middle');
+    writers.push({ w, c, ok });
+  }
+  const WS = i => .45 + i * .6, WALK = 1.79;
+  function wState(i, lt) {
+    const s = WS(i), ta = s + WALK, tc = ta + 0.32;
+    if (lt < s) return null;
+    if (lt < ta) return { x: -80 + (lt - s) * 520, dir: 1, mv: true, op: 1, ph: (lt - s) * 12, ta, tc };
+    if (lt < tc) return { x: 850, dir: 1, mv: false, op: 1, ph: 0, ta, tc };
+    if (!REJS.includes(i)) { const u = clamp((lt - tc) / 0.5); return { x: 850 + 170 * u, dir: 1, mv: true, op: 1 - u, ph: (lt - s) * 12, ta, tc }; }
+    const u = clamp((lt - tc) / 1.2); return { x: 850 - 260 * u, dir: -1, mv: u < 1, op: 1 - u, ph: (lt - s) * 12, ta, tc };
+  }
+  captions(S0, [
+    { ey: 'EVERY STORY STARTS HERE', d: 'Writers arrive from everywhere', m: ['Writers arrive', 'from everywhere'], t: .7, o: 3.7 },
+    { ey: 'PROFILE REVIEW', d: ['Creators apply with their work', 'and professional background'], m: ['Creators apply with', 'their work and', 'professional background'], mfs: 36, t: 3.95 }
+  ]);
+
+  /* =========================================================
+     SCENE 1 · PROFILE: GENRE, FORMAT, UPLOAD  (7 – 12.3)
+     ========================================================= */
+  const S1 = mkScene(7, 12.3);
+  const b1p = B(S1.cam, 'translate(-234 -5) scale(.95)');
+  const card1 = A(E('g', {}, b1p), 'pop', .1, .5);
+  const c1f = rough(card1);
+  E('rect', { x: 308, y: 98, width: 460, height: 390, rx: 24, fill: 'url(#qxt-hatch)' }, c1f);
+  E('rect', { x: 300, y: 90, width: 460, height: 390, rx: 24, class: 'inkf' }, c1f);
+  head(c1f, 356, 150, 28, AM, 0);
+  T(card1, 404, 144, 'Your profile', 'big', 'font-size:26px');
+  chip(card1, 404, 158, 'IMDb · profile reference', MU);
+  E('path', { d: 'M326 214 L 734 214', class: 'ink mut thin' }, card1);
+  T(card1, 326, 246, 'GENRE', 'mono', 'font-size:13px;fill:#8b8a84;letter-spacing:.14em');
+  T(card1, 326, 334, 'FORMAT', 'mono', 'font-size:13px;fill:#8b8a84;letter-spacing:.14em');
+  function selChips(parent, labels, x0, y) {
+    let x = x0;
+    return labels.map(l => {
+      const w = 30 + l.length * 9.4;
+      const r = E('rect', { x, y, width: w, height: 36, rx: 18, fill: '#161614', stroke: '#30302c', 'stroke-width': 2 }, parent);
+      const t = T(parent, x + w / 2, y + 24, l, '', FONT + 'font-weight:600;font-size:16px;fill:#f4f3ef', 'middle');
+      const o = { r, t, cx: x + w / 2, cy: y + 18 }; x += w + 10; return o;
+    });
+  }
+  const genre = selChips(card1, ['Thriller', 'Drama', 'Comedy', 'Sci-fi'], 326, 258);
+  const format = selChips(card1, ['Film', 'Series'], 326, 346);
+  const upBtn = E('g', {}, card1);
+  pill(upBtn, 326, 408, 220, 48, AM, 'Upload script  ↑', FONT + 'font-weight:700;font-size:17px;fill:#000');
+  const cur1 = makeCursor(b1p, [[0.3, 800, 520], [1.0, genre[0].cx + 6, genre[0].cy + 4], [1.4, genre[0].cx + 6, genre[0].cy + 4],
+    [1.8, format[0].cx + 4, format[0].cy + 4], [2.2, format[0].cx + 4, format[0].cy + 4], [2.6, 440, 434], [3.3, 440, 434]], [1.2, 2.0, 2.75], false);
+  const b1u = B(S1.cam, 'translate(-621 355) scale(.9)');
+  const zone = A(E('g', {}, b1u), 'pop', .35, .5);
+  const zf = rough(zone);
+  E('rect', { x: 820, y: 120, width: 340, height: 310, rx: 24, class: 'inkf' }, zf);
+  E('rect', { x: 842, y: 142, width: 296, height: 200, rx: 16, fill: 'url(#qxt-hatch)', opacity: .45 }, zf);
+  E('path', { d: 'M990 250 L 990 200 M 970 220 L 990 200 L 1010 220', class: 'ink amb', style: 'stroke-width:5' }, zf);
+  T(zone, 990, 296, 'Drop your script here', 'lbl', 'font-size:19px', 'middle');
+  E('rect', { x: 848, y: 364, width: 284, height: 10, rx: 5, fill: '#232321' }, zone);
+  const upBar = E('rect', { x: 848, y: 364, width: 0, height: 10, rx: 5, fill: G }, zone);
+  const upStat = T(zone, 848, 402, '', 'monob', 'font-size:14px;fill:#8b8a84');
+  const fileW = E('g', { transform: 'translate(770 300)' }, b1u);
+  const file = E('g', { 'data-a': 'launch', 'data-t': '2.9', 'data-d': '.8', 'data-dx': 220, 'data-dy': -84, 'data-arc': 80, 'data-s0': .6 }, fileW);
+  E('path', { d: 'M-30 -40 L 18 -40 L 30 -28 L 30 40 L -30 40 Z', fill: TX, stroke: '#050505', 'stroke-width': 2 }, file);
+  T(file, 0, -16, 'MANTIS', 'monob', 'font-size:10px;fill:#0f0f0e', 'middle');
+  E('path', { d: 'M-18 -2 L 18 -2 M -18 10 L 12 10 M -18 22 L 18 22', stroke: '#8b8a84', 'stroke-width': 2.4, 'stroke-linecap': 'round' }, file);
+  captions(S1, [{ ey: 'YOUR PROFILE', d: 'Genre, format, upload', m: ['Genre, format,', 'upload'], t: .45 }]);
+
+  /* =========================================================
+     SCENE 2 · QIP FILTER → METHOD → APPROVED  (12 – 22.3)
+     ========================================================= */
+  const S2 = mkScene(12, 22.3);
+  const bA = B(S2.cam, 'translate(-118 288.6) scale(.58)');
+  const gA = A(E('g', {}, bA), 'cap', 0, .3, 4.0);
+  const aF = rough(gA);
+  A(E('path', { d: 'M60 360 L 1200 360', class: 'ink' }, aF), 'draw', .05, .6);
+  for (let x = 90; x < 1190; x += 60) E('circle', { cx: x, cy: 372, r: 6, class: 'ink mut thin' }, aF);
+  E('rect', { x: 540, y: 140, width: 200, height: 250, rx: 18, fill: '#0b0b0a' }, gA);
+  const pagesG = E('g', {}, gA);
+  const scanFrame = rough(gA);
+  E('rect', { x: 540, y: 140, width: 200, height: 250, rx: 18, fill: 'none', class: 'ink' }, scanFrame);
+  E('rect', { x: 540, y: 140, width: 200, height: 56, rx: 18, fill: 'url(#qxt-hatch)' }, scanFrame);
+  T(gA, 640, 180, 'QIP', 'big', 'font-size:34px;font-weight:800', 'middle');
+  const qDots = [];
+  for (let j = 0; j < 3; j++) for (let i = 0; i < 6; i++) qDots.push(E('circle', { cx: 600 + i * 16, cy: 212 + j * 12, r: 3.6, fill: '#30302c' }, gA));
+  const beam = E('rect', { x: 552, y: 250, width: 176, height: 10, rx: 5, fill: G, opacity: 0 }, gA);
+  T(gA, 1060, 118, 'APPROVED', 'monob', 'font-size:16px;fill:#3CD98A;letter-spacing:.12em', 'middle');
+  T(gA, 1060, 540, 'TO IMPROVE', 'monob', 'font-size:16px;fill:#EFAC39;letter-spacing:.12em', 'middle');
+  const OUT = [1, 0, 1, 1];
+  const pages = OUT.map((ok, i) => {
+    const g = E('g', { opacity: 0 }, pagesG);
+    E('path', { d: 'M-28 -74 L 16 -74 L 28 -62 L 28 0 L -28 0 Z', fill: ok ? TX : AM, stroke: '#050505', 'stroke-width': 2 }, g);
+    E('path', { d: 'M-18 -54 L 18 -54 M -18 -42 L 12 -42 M -18 -30 L 18 -30 M -18 -18 L 8 -18', stroke: ok ? MU : '#1a1206', 'stroke-width': 2.6, 'stroke-linecap': 'round' }, g);
+    const badge = E('g', { opacity: 0 }, g);
+    if (ok) check(badge, 22, -70, 13);
+    else { E('rect', { x: -40, y: -96, width: 80, height: 22, rx: 11, fill: '#161614', stroke: AM, 'stroke-width': 2 }, badge); T(badge, 0, -80, 'IMPROVE', 'monob', 'font-size:11px;fill:#EFAC39', 'middle'); }
+    return { g, badge, ok, s: .2 + i * .55 };
+  });
+  let apprIdx = 0; pages.forEach(p => { if (p.ok) p.k = apprIdx++; });
+  function pageState(p, lt) {
+    const ta = p.s + 1.31, te = ta + .3, tx = te + .3, to = tx + .45;
+    if (lt < p.s) return null;
+    if (lt < ta) return { x: -40 + (lt - p.s) * 520, y: 360, sc: 1, scan: false };
+    if (lt < te) return { x: 640, y: 360, sc: 1, scan: true };
+    if (lt < tx) return { x: 640 + (lt - te) / .3 * 160, y: 360, sc: 1, done: true };
+    const u = eio(clamp((lt - tx) / .45));
+    const tx2 = 1060, ty2 = p.ok ? 250 - p.k * 12 : 500;
+    return { x: 800 + (tx2 - 800) * u, y: 360 + (ty2 - 360) * u, sc: 1 - .15 * u, done: true };
+  }
+  // part B: method
+  const bBp = B(S2.cam, 'translate(-10 30) scale(.8)');
+  const gBp = A(E('g', {}, bBp), 'cap', 4.2, .4);
+  const pf = rough(gBp);
+  E('path', { d: 'M220 100 L 452 100 L 480 128 L 480 440 L 220 440 Z', fill: '#EFAC39', class: 'ink' }, pf);
+  E('path', { d: 'M452 100 L 452 128 L 480 128', class: 'ink thin', style: 'stroke:#1a1206' }, pf);
+  T(gBp, 244, 138, 'MANTIS', 'monob', 'font-size:17px;fill:#1a1206;letter-spacing:.1em');
+  T(gBp, 244, 158, 'SCENE 28', 'mono', 'font-size:12px;fill:#1a1206');
+  [182, 204, 226, 256, 278, 300, 330, 352, 374, 404].forEach((y, i) => E('path', { d: `M244 ${y} L ${[440, 420, 452, 400, 446, 430, 452, 410, 440, 420][i]} ${y}`, stroke: 'rgba(26,18,6,.55)', 'stroke-width': 3, 'stroke-linecap': 'round' }, gBp));
+  const squig = (x1, x2, y) => { let d = `M${x1} ${y}`, x = x1, up = true; while (x < x2) { d += ` q 5 ${up ? -6 : 6} 10 0`; x += 10; up = !up; } return d; };
+  const marks = [[212, 250, 400], [262, 262, 420], [310, 250, 380], [360, 262, 430], [412, 250, 400]].map(([y, a, b]) =>
+    E('path', { d: squig(a, b, y), fill: 'none', stroke: RD, 'stroke-width': 3.4, 'stroke-linecap': 'round' }, gBp));
+  const stampW = E('g', { transform: 'translate(350 285) rotate(-12)' }, bBp);
+  const stamp = A(E('g', {}, stampW), 'slam', 7.9, .32);
+  E('rect', { x: -206, y: -64, width: 412, height: 128, rx: 16, fill: 'rgba(8,24,16,.88)', stroke: G, 'stroke-width': 6 }, stamp);
+  E('rect', { x: -194, y: -52, width: 388, height: 104, rx: 10, fill: 'none', stroke: G, 'stroke-width': 2 }, stamp);
+  T(stamp, -182, 22, 'QIP', 'big', 'font-size:60px;font-weight:800;fill:#3CD98A');
+  E('path', { d: 'M-62 -38 L -62 38', stroke: G, 'stroke-width': 3 }, stamp);
+  T(stamp, -48, 4, 'APPROVED', 'big', 'font-size:34px;font-weight:800;fill:#3CD98A;letter-spacing:.04em');
+  T(stamp, -48, 30, 'QANTICA INTELLECTUAL PROPERTY', 'monob', 'font-size:11px;fill:#3CD98A;letter-spacing:.06em');
+  const ring = A(E('g', {}, bBp), 'draw', 7.95, .3);
+  let rd = ''; for (let i = 0; i < 12; i++) { const a = i * Math.PI / 6, c = Math.cos(a), s = Math.sin(a); rd += `M${(350 + c * 200).toFixed(1)} ${(285 + s * 130).toFixed(1)} L ${(350 + c * 236).toFixed(1)} ${(285 + s * 156).toFixed(1)} `; }
+  E('path', { d: rd, class: 'ink grn' }, ring);
+  const bBl = B(S2.cam, 'translate(-468 310) scale(.9)');
+  const gBl = A(E('g', {}, bBl), 'cap', 4.35, .4);
+  const lf = rough(gBl);
+  E('rect', { x: 548, y: 108, width: 560, height: 370, rx: 22, fill: 'url(#qxt-hatch)' }, lf);
+  E('rect', { x: 540, y: 100, width: 560, height: 370, rx: 22, class: 'inkf' }, lf);
+  T(gBl, 570, 136, 'THE QIP METHOD', 'monob', 'font-size:13px;fill:#EFAC39;letter-spacing:.14em');
+  T(gBl, 570, 172, 'Improvement points', 'big', 'font-size:26px');
+  T(gBl, 1070, 132, 'IPI', 'mono', 'font-size:12px;fill:#8b8a84', 'end');
+  const ipi = T(gBl, 1070, 176, '23', 'big', 'font-size:46px;font-variant-numeric:tabular-nums', 'end');
+  const POINTS = ["Javi's turn needs a visible trigger", 'Act two drags in scenes 20–24', "Xina's threat lands too early", 'Scene 28: what does he lose?', 'The ending needs a payoff'];
+  const rows = POINTS.map((p, k) => {
+    const y = 200 + k * 44;
+    const box = E('rect', { x: 570, y, width: 24, height: 24, rx: 6, fill: 'none', stroke: MU, 'stroke-width': 2.4 }, gBl);
+    const tick = E('path', { d: `M575 ${y + 12} l 5 6 l 10 -12`, fill: 'none', stroke: '#000', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0 }, gBl);
+    const tx = T(gBl, 606, y + 18, p, '', FONT + 'font-size:17px;fill:#f4f3ef');
+    return { box, tick, tx };
+  });
+  E('rect', { x: 566, y: 424, width: 508, height: 34, rx: 17, fill: '#161614', stroke: '#30302c', 'stroke-width': 2 }, gBl);
+  T(gBl, 584, 446, 'Tutor · Asks, never writes. The author writes every word.', '', FONT + 'font-size:14px;fill:#8b8a84');
+  captions(S2, [
+    { ey: 'QIP · QANTICA INTELLECTUAL PROPERTY', d: 'QIP reads every script', m: ['QIP reads', 'every script'], t: .4, o: 3.9 },
+    { ey: 'THE QIP METHOD', d: 'Not ready? Improve it', m: ['Not ready?', 'Improve it'], t: 4.45, o: 7.7 },
+    { ey: 'QANTICA INTELLECTUAL PROPERTY', d: 'Approved by QIP', m: ['Approved', 'by QIP'], t: 7.95 }
+  ]);
+
+  /* =========================================================
+     SCENE 3 · COMMUNITY NETWORK  (22 – 28.3)
+     ========================================================= */
+  const S3 = mkScene(22, 28.3);
+  const bN = B(S3.cam, 'translate(-139.6 248) scale(.64)');
+  const edgesG = rough(bN);
+  const pulseG = E('g', {}, bN);
+  const nodesG = E('g', {}, bN);
+  const CX = 640, CY = 300;
+  const nodes = [];
+  for (let k = 0; k < 6; k++) { const a = -Math.PI / 2 + k * Math.PI / 3 + .3; nodes.push({ x: CX + 200 * Math.cos(a), y: CY + 125 * Math.sin(a), r: 22, t: .3 + k * .13, ring: 1 }); }
+  for (let k = 0; k < 10; k++) { const a = -Math.PI / 2 + k * Math.PI / 5; nodes.push({ x: CX + 370 * Math.cos(a), y: CY + 215 * Math.sin(a), r: 17, t: 1.1 + k * .13, ring: 2 }); }
+  const LBL = { 6: 'Thriller · Madrid', 8: 'Drama · Buenos Aires', 10: 'Sci-fi · Seoul', 11: 'Comedy · CDMX', 13: 'Horror · Lagos', 15: 'Series · Lisbon' };
+  nodes.forEach((n, i) => {
+    n.g = E('g', { opacity: 0 }, nodesG);
+    const inner = rough(n.g);
+    head(inner, n.x, n.y, n.r, HAIRS[i % HAIRS.length], i % 3);
+    if (LBL[i]) T(n.g, n.x, n.y + n.r + 22, LBL[i], 'mono', 'font-size:14px;fill:#8b8a84', 'middle');
+    if (n.ring === 1) check(n.g, n.x + n.r * .8, n.y - n.r * .8, 8);
+  });
+  const center = A(E('g', {}, nodesG), 'pop', .05, .5);
+  E('circle', { cx: CX, cy: CY, r: 60, fill: 'url(#qxt-ggl)' }, center);
+  head(rough(center), CX, CY, 36, AM, 0);
+  check(center, CX + 30, CY - 30, 13);
+  T(center, CX, CY + 66, 'Mantis · writer', '', FONT + 'font-weight:700;font-size:17px;fill:#f4f3ef', 'middle');
+  const EDGES = [];
+  for (let k = 0; k < 6; k++) EDGES.push([-1, k]);
+  for (let k = 0; k < 10; k++) { const a = Math.floor(k * 6 / 10); EDGES.push([a, 6 + k]); }
+  for (let k = 0; k < 10; k += 2) EDGES.push([6 + k, 6 + (k + 1) % 10]);
+  EDGES.push([0, 3], [1, 4]);
+  const pt = i => i < 0 ? { x: CX, y: CY, t: 0 } : nodes[i];
+  const edgeEls = EDGES.map(([a, b]) => {
+    const p = pt(a), q = pt(b);
+    const el = E('path', { d: `M${p.x.toFixed(1)} ${p.y.toFixed(1)} L ${q.x.toFixed(1)} ${q.y.toFixed(1)}`, class: 'ink mut thin' }, edgesG);
+    A(el, 'draw', (Math.max(p.t, q.t) + .45).toFixed(2), .45);
+    return { el, p, q };
+  });
+  const pulses = [];
+  for (let k = 0; k < 10; k++) pulses.push({ c: E('circle', { r: 5, fill: AM, opacity: 0 }, pulseG), e: edgeEls[(k * 7) % edgeEls.length], off: k * .37 });
+  captions(S3, [{ ey: 'COMMUNITY', d: 'Approved writers join the network', m: ['Approved writers', 'join the network'], t: .45 }]);
+
+  /* =========================================================
+     SCENE 4 · PACKAGE: QANTICA + SATELLITES → READY FOR SHOWCASE  (28 – 35.3)
+     ========================================================= */
+  const S4 = mkScene(28, 35.3);
+  const bP = B(S4.cam, 'translate(-152.4 242) scale(.66)');
+  const orb = rough(bP);
+  A(E('ellipse', { cx: 640, cy: 300, rx: 360, ry: 190, class: 'ink mut thin' }, orb), 'draw', .1, 1.0);
+  A(E('ellipse', { cx: 640, cy: 300, rx: 230, ry: 118, class: 'ink mut thin', opacity: .5 }, orb), 'draw', .3, 1.0);
+  const linksG = rough(bP);
+  const pkg = A(E('g', {}, bP), 'pop', .15, .5);
+  E('circle', { cx: 640, cy: 303, r: 110, fill: 'url(#qxt-agl)' }, pkg);
+  const pkgF = rough(pkg);
+  E('path', { d: 'M560 250 L 598 250 L 610 236 L 720 236 L 720 370 L 560 370 Z', fill: AM, class: 'ink' }, pkgF);
+  T(pkg, 640, 316, 'MANTIS', 'monob', 'font-size:19px;fill:#1a1206;letter-spacing:.1em', 'middle');
+  check(pkg, 716, 242, 15);
+  const pkgChip = A(E('g', {}, bP), 'fade', .6, .4);
+  chip(pkgChip, 640, 180, 'QANTICA + SATELLITES', AM, true);
+  const SATS = ['Financing plan', 'Budget', 'Viability', 'Gaming · GDD', 'Teaser', 'Cast proposal'];
+  const SANG = [-150, -90, -30, 30, 90, 150].map(a => a * Math.PI / 180);
+  function satIcon(g, k) {
+    if (k === 0) { E('circle', { cx: 0, cy: 0, r: 16, class: 'ink thin' }, g); E('path', { d: 'M0 0 L 0 -16 A 16 16 0 0 1 14 8 Z', fill: AM }, g); }
+    else if (k === 1) { [[-14, 6, 10], [-3, -2, 18], [8, -10, 26]].forEach(([x, y, h]) => E('rect', { x, y, width: 8, height: h, fill: x > 0 ? AM : 'none', class: 'ink thin' }, g)); }
+    else if (k === 2) { E('path', { d: 'M-16 8 A 16 16 0 0 1 16 8', class: 'ink thin' }, g); E('path', { d: 'M0 8 L 10 -6', stroke: G, 'stroke-width': 3.4, 'stroke-linecap': 'round' }, g); }
+    else if (k === 3) { E('path', { d: 'M-18 -6 C -18 -14 18 -14 18 -6 L 22 10 C 22 16 14 18 12 12 L 8 6 L -8 6 L -12 12 C -14 18 -22 16 -22 10 Z', class: 'ink thin', fill: '#161614' }, g); E('circle', { cx: 9, cy: -3, r: 3, fill: AM }, g); }
+    else if (k === 4) { E('rect', { x: -18, y: -12, width: 36, height: 26, rx: 4, class: 'ink thin' }, g); E('path', { d: 'M-5 -5 L -5 7 L 7 1 Z', fill: AM }, g); }
+    else { E('circle', { cx: -8, cy: -6, r: 7, class: 'ink thin' }, g); E('circle', { cx: 9, cy: -6, r: 7, class: 'ink thin', fill: AM }, g); E('path', { d: 'M-18 14 Q -8 2 2 14 M 0 14 Q 9 2 19 14', class: 'ink thin' }, g); }
+  }
+  const sats = SATS.map((l, k) => {
+    const a = SANG[k], x = 640 + 360 * Math.cos(a), y = 300 + 190 * Math.sin(a);
+    const g = E('g', { opacity: 0 }, bP);
+    E('circle', { cx: 0, cy: 0, r: 36, class: 'inkf', filter: 'url(#qxt-rough)' }, g);
+    satIcon(g, k);
+    T(g, 0, 60, l, '', FONT + 'font-weight:700;font-size:17px;fill:#f4f3ef', 'middle');
+    const tk = .5 + k * .45;
+    const link = A(E('path', { d: `M${x.toFixed(1)} ${y.toFixed(1)} L 640 303`, class: 'ink amb thin', opacity: .7 }, linksG), 'draw', (tk + .75).toFixed(2), .3);
+    return { g, a, x, y, tk, link };
+  });
+  const glW = E('g', { transform: 'translate(640 303) rotate(-8)' }, bP);
+  const gl = A(E('g', {}, glW), 'slam', 4.7, .32);
+  E('rect', { x: -310, y: -52, width: 620, height: 104, rx: 14, fill: 'rgba(8,24,16,.9)', stroke: G, 'stroke-width': 6 }, gl);
+  E('rect', { x: -298, y: -40, width: 596, height: 80, rx: 9, fill: 'none', stroke: G, 'stroke-width': 2 }, gl);
+  T(gl, 0, 15, 'READY FOR SHOWCASE', 'big', 'font-size:40px;font-weight:800;fill:#3CD98A;letter-spacing:.05em', 'middle');
+  captions(S4, [
+    { ey: 'QANTICA + SATELLITES', d: 'We build the full package', m: ['We build the', 'full package'], t: .45, o: 4.5 },
+    { ey: 'READY FOR SHOWCASE', d: 'The project is ready to present', m: ['The project is', 'ready to present'], t: 4.8 }
+  ]);
+
+  /* =========================================================
+     SCENE 5 · SHOWCASE (explore & follow) + MEMBERSHIP (on us)  (35 – 44.3)
+     ========================================================= */
+  const S5 = mkScene(35, 44.3);
+  const b5s = B(S5.cam, 'translate(-402 37) scale(1.05)');
+  const g5s = A(E('g', {}, b5s), 'cap', 0, .4, 4.3);
+  E('path', { d: 'M250 -40 L 330 -40 L 560 330 L 420 330 Z', fill: AM, opacity: .07 }, g5s);
+  E('path', { d: 'M1030 -40 L 950 -40 L 720 330 L 860 330 Z', fill: AM, opacity: .07 }, g5s);
+  A(E('rect', { x: 400, y: 60, width: 480, height: 270, rx: 16, class: 'inkf', style: 'fill:#0b0b0a;stroke-width:4', filter: 'url(#qxt-rough)' }, g5s), 'draw', .05, .5);
+  const poster = A(E('g', {}, g5s), 'fade', .45, .5);
+  E('circle', { cx: 640, cy: 170, r: 110, fill: 'url(#qxt-agl)' }, poster);
+  T(poster, 426, 94, 'SHOWCASE', 'monob', 'font-size:12px;fill:#EFAC39;letter-spacing:.16em');
+  T(poster, 640, 186, 'MANTIS', 'big', 'font-size:62px;font-weight:800;letter-spacing:.12em', 'middle');
+  T(poster, 640, 220, 'Film · Album · Game', 'mono', 'font-size:15px;fill:#8b8a84', 'middle');
+  chip(poster, 640, 244, 'QIP APPROVED', G, true);
+  T(poster, 640, 312, 'Powered by QANTICA.', 'sub', 'font-size:13px', 'middle');
+  const b5c = B(S5.cam, 'translate(-190.6 142) scale(.72)');
+  const g5c = A(E('g', {}, b5c), 'cap', 0, .4, 4.3);
+  const people = [];
+  for (let i = 0; i < 9; i++) {
+    const x = 320 + i * 80;
+    const outer = E('g', {}, g5c);
+    const g = A(E('g', {}, outer), 'pop', (.2 + i * .06).toFixed(2), .4);
+    const f = rough(g);
+    E('path', { d: `M${x - 36} 522 C ${x - 34} 470 ${x + 34} 470 ${x + 36} 522 Z`, class: 'inkf' }, f);
+    if (i % 3 === 1) { E('path', { d: `M${x + 24} 488 L ${x + 42} 424`, class: 'ink' }, f); E('circle', { cx: x + 44, cy: 417, r: 7, class: 'inkf' }, f); }
+    head(f, x, 440, 24, HAIRS[i % HAIRS.length], i % 3);
+    people.push(outer);
+  }
+  const heartsG = E('g', {}, g5c), uheartsG = E('g', {}, g5c);
+  const hearts = [];
+  for (let i = 0; i < 14; i++) {
+    const g = E('g', { opacity: 0 }, heartsG);
+    E('path', { d: HEART, fill: i % 3 === 1 ? RD : AM, stroke: '#050505', 'stroke-width': 1.5 }, g);
+    hearts.push({ g, s: .8 + i * .24, x: 320 + ((i * 4) % 9) * 80 });
+  }
+  const crowdHit = E('rect', { x: 270, y: 395, width: 740, height: 140, class: 'hit' }, g5c);
+  const b5v = B(S5.cam, 'translate(-890 460)');
+  const g5v = A(E('g', {}, b5v), 'cap', .5, .4, 4.3);
+  T(g5v, 930, 120, 'PROJECT FOLLOWERS', 'mono', 'font-size:13px;fill:#8b8a84;letter-spacing:.14em');
+  // followers appear one by one (no example figure)
+  for (let k = 0; k < 6; k++) {
+    const fg = A(E('g', {}, g5v), 'pop', (.9 + k * .3).toFixed(2), .4);
+    head(rough(fg), 946 + k * 32, 152, 13, HAIRS[(k + 2) % HAIRS.length], k % 3);
+  }
+  // "Your list": MANTIS gets added
+  const listCard = A(E('g', {}, g5v), 'pop', .7, .45);
+  const lcBg = E('rect', { x: 930, y: 178, width: 236, height: 44, rx: 12, class: 'inkf', filter: 'url(#qxt-rough)' }, listCard);
+  T(listCard, 946, 194, 'YOUR LIST', 'mono', 'font-size:11px;fill:#8b8a84;letter-spacing:.14em');
+  T(listCard, 946, 213, 'MANTIS', 'big', 'font-size:15px;letter-spacing:.08em');
+  const addBadge = E('g', { transform: 'translate(1140 200)' }, listCard);
+  const addCircle = E('circle', { r: 13, fill: AM }, addBadge);
+  const addPlus = E('path', { d: 'M-6 0 L 6 0 M 0 -6 L 0 6', stroke: '#000', 'stroke-width': 3, 'stroke-linecap': 'round' }, addBadge);
+  const addTick = E('path', { d: 'M-6 0 l 4 4 l 8 -8', fill: 'none', stroke: '#000', 'stroke-width': 3, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0 }, addBadge);
+  const addedChip = A(E('g', {}, g5v), 'rise', 2.75, .4);
+  chip(addedChip, 930, 234, 'Added to your list ✓', G);
+  const tapHint = A(E('g', {}, g5v), 'pop', 3.2, .4);
+  chip(tapHint, 930, 274, 'Tap the crowd ♥', AM);
+  const cur5 = makeCursor(g5v, [[1.5, 1230, 300], [2.2, 1146, 208], [2.9, 1146, 208]], [2.45], false);
+  // membership part
+  const b5m = B(S5.cam, 'translate(-115 -62) scale(1.1)');
+  const g5m = A(E('g', {}, b5m), 'cap', 4.4, .45);
+  const cardWrap = E('g', { transform: 'translate(170 150) scale(.857) translate(-430 -110) rotate(-4 640 240)' }, g5m);
+  const mcard = A(E('g', {}, cardWrap), 'pop', 4.5, .6);
+  E('rect', { x: 440, y: 122, width: 420, height: 260, rx: 24, fill: 'url(#qxt-hatch)' }, mcard);
+  E('rect', { x: 430, y: 110, width: 420, height: 260, rx: 24, fill: 'url(#qxt-gold)' }, mcard);
+  E('rect', { x: 430, y: 110, width: 420, height: 260, rx: 24, fill: 'url(#qxt-hatchD)' }, mcard);
+  const shine = E('rect', { x: 0, y: 60, width: 140, height: 380, fill: 'url(#qxt-shine)', transform: 'skewX(-18)', opacity: 0 }, E('g', { 'clip-path': 'url(#qxt-cardClip)' }, mcard));
+  T(mcard, 462, 162, 'QANTICA', 'big', 'font-size:26px;font-weight:800;fill:#1a1206;letter-spacing:.02em');
+  T(mcard, 818, 160, 'MEMBERSHIP', 'monob', 'font-size:13px;fill:#1a1206;letter-spacing:.14em', 'end');
+  E('rect', { x: 462, y: 196, width: 54, height: 40, rx: 8, fill: 'rgba(26,18,6,.08)', stroke: '#1a1206', 'stroke-width': 2.5 }, mcard);
+  E('path', { d: 'M462 216 L 516 216 M 489 196 L 489 236', stroke: '#1a1206', 'stroke-width': 2 }, mcard);
+  T(mcard, 460, 336, 'ON US', 'big', 'font-size:70px;font-weight:800;fill:#1a1206;letter-spacing:.04em');
+  T(mcard, 818, 334, 'ACTIVE', 'monob', 'font-size:15px;fill:#1a1206;letter-spacing:.1em', 'end');
+  E('rect', { x: 430, y: 110, width: 420, height: 260, rx: 24, fill: 'none', class: 'ink', filter: 'url(#qxt-rough)' }, mcard);
+  const nc = A(E('g', {}, g5m), 'rise', 5.3, .4);
+  chip(nc, 172, 400, 'No card needed', G);
+  const b5t = B(S5.cam, 'translate(-522 330) scale(.9)');
+  const g5t = A(E('g', {}, b5t), 'cap', 4.4, .45);
+  const TILES = ['Trivia', 'Exclusive scenes', 'Write & comment', 'Interactive pack'];
+  function tileIcon(g, k, cx, cy) {
+    if (k === 0) { E('circle', { cx, cy, r: 24, class: 'inkf' }, g); T(g, cx, cy + 10, '?', 'big', 'font-size:30px;font-weight:800;fill:#EFAC39', 'middle'); }
+    else if (k === 1) { E('rect', { x: cx - 26, y: cy - 10, width: 52, height: 34, rx: 5, class: 'inkf' }, g); E('path', { d: `M${cx - 26} ${cy - 10} L ${cx - 22} ${cy - 24} L ${cx + 28} ${cy - 24} L ${cx + 26} ${cy - 10} Z`, fill: AM, class: 'ink thin' }, g); }
+    else if (k === 2) { E('path', { d: `M${cx - 26} ${cy - 20} L ${cx + 26} ${cy - 20} L ${cx + 26} ${cy + 10} L ${cx - 6} ${cy + 10} L ${cx - 18} ${cy + 22} L ${cx - 16} ${cy + 10} L ${cx - 26} ${cy + 10} Z`, class: 'inkf' }, g); E('path', { d: `M${cx - 16} ${cy - 9} L ${cx + 16} ${cy - 9} M ${cx - 16} ${cy + 1} L ${cx + 6} ${cy + 1}`, class: 'ink mut thin' }, g); }
+    else { E('path', { d: `M${cx - 24} ${cy - 12} L ${cx + 24} ${cy - 12} L ${cx + 24} ${cy + 22} L ${cx - 24} ${cy + 22} Z`, fill: AM, class: 'ink' }, g); E('path', { d: `M${cx - 24} ${cy - 12} L ${cx - 16} ${cy - 24} L ${cx + 16} ${cy - 24} L ${cx + 24} ${cy - 12}`, class: 'ink' }, g); }
+  }
+  const tiles = TILES.map((l, k) => {
+    const x = 600 + (k % 2) * 280, y = 110 + Math.floor(k / 2) * 170;
+    const g = A(E('g', {}, g5t), 'pop', (4.6 + k * .12).toFixed(2), .45);
+    const f = rough(g);
+    const bg = E('rect', { x, y, width: 260, height: 150, rx: 18, class: 'inkf' }, f);
+    const content = E('g', { opacity: .3 }, g);
+    tileIcon(rough(content), k, x + 52, y + 80);
+    T(content, x + 94, y + 86, l, 'lbl', 'font-size:18px');
+    const lk = E('g', { transform: `translate(${x + 230} ${y + 30})` }, g);
+    const sh = E('path', { d: 'M-9 -2 L -9 -11 A 9 9 0 0 1 9 -11 L 9 -2', fill: 'none', stroke: TX, 'stroke-width': 3.6, 'stroke-linecap': 'round' }, lk);
+    const body = E('rect', { x: -14, y: -4, width: 28, height: 22, rx: 5, fill: AM, stroke: TX, 'stroke-width': 2.4 }, lk);
+    return { bg, content, sh, body };
+  });
+  captions(S5, [
+    { ey: 'SHOWCASE', d: ['Explore the stories.', 'Follow what moves you'], m: ['Explore the stories.', 'Follow what moves you'], mfs: 36, t: .45, o: 4.2 },
+    { ey: 'MEMBERSHIP · ON US', d: 'Members unlock more', m: ['Members', 'unlock more'], t: 4.65 }
+  ]);
+
+  /* =========================================================
+     SCENE 6 · POSSIBLE PATHS  (44 – 51.3)
+     ========================================================= */
+  const S6 = mkScene(44, 51.3);
+  const b6 = B(S6.cam, null);
+  const topChip = A(E('g', { class: 'dsk' }, b6), 'fade', .2, .4);
+  chip(topChip, 640, 66, 'QIP APPROVED · READY FOR SHOWCASE', G, true);
+  const topChipM = A(E('g', { class: 'mob' }, b6), 'fade', .2, .4);
+  chip(topChipM, 270, 92, 'QIP APPROVED · SHOWCASE', G, true);
+  const ROUTES = [
+    { t: 'Script or IP sale', d: ['A sale of the script or', 'agreed project rights.'], c: 'Direct sale or auction' },
+    { t: 'Licensing', d: ['Rights licensed for agreed', 'uses, territories and terms.'], c: 'Uses · territories · terms' },
+    { t: 'Crowdfunding', d: ['A potential campaign supported', 'by the project’s community.'], c: 'Model defined per project' }
+  ];
+  function routeIcon(parent, k, cx, cy, s) {
+    const g = E('g', { transform: `translate(${cx} ${cy}) scale(${s})` }, parent);
+    const f = rough(g);
+    if (k === 0) {
+      E('path', { d: 'M-34 -46 L 20 -46 L 34 -32 L 34 46 L -34 46 Z', class: 'inkf' }, f);
+      E('path', { d: 'M-20 -22 L 20 -22 M -20 -8 L 14 -8 M -20 6 L 20 6 M -20 20 L 8 20', class: 'ink mut thin' }, f);
+      const sg = E('g', { transform: 'translate(30 -40) rotate(-14)' }, g);
+      E('rect', { x: -30, y: -13, width: 60, height: 26, rx: 5, fill: AM }, sg);
+      T(sg, 0, 6, 'SOLD', 'monob', 'font-size:15px;fill:#000', 'middle');
+    } else if (k === 1) {
+      E('rect', { x: -54, y: -36, width: 108, height: 72, rx: 8, class: 'inkf' }, f);
+      E('path', { d: 'M-18 48 L 18 48 M 0 36 L 0 48', class: 'ink' }, f);
+      E('path', { d: 'M-10 -16 L -10 16 L 18 0 Z', fill: AM }, g);
+      E('circle', { cx: 52, cy: -40, r: 18, class: 'inkf' }, f);
+      E('path', { d: 'M34 -40 L 70 -40 M 52 -58 Q 40 -40 52 -22 M 52 -58 Q 64 -40 52 -22', class: 'ink thin' }, f);
+    } else {
+      // community supporting a campaign: coins ← people
+      [[-50, 30], [-50, 18], [-50, 6], [-26, 30], [-26, 18]].forEach(([x, y]) => E('ellipse', { cx: x, cy: y, rx: 16, ry: 6, fill: AM, class: 'ink thin' }, f));
+      E('path', { d: 'M14 -2 L -6 -2 M 2 -10 L -6 -2 L 2 6', class: 'ink amb' }, f);
+      head(f, 34, -18, 13, TX, 1); head(f, 62, -8, 13, AM, 2); head(f, 46, 18, 13, '#C6832A', 0);
+    }
+  }
+  const routeEls = [];
+  ROUTES.forEach((r, k) => {
+    // desktop card
+    const x = 110 + k * 360, y = 118;
+    const dO = E('g', { class: 'dsk tap' }, b6);
+    const d = A(E('g', {}, dO), 'pop', (.35 + k * .7).toFixed(2), .5);
+    const df = rough(d);
+    E('rect', { x: x + 8, y: y + 8, width: 340, height: 350, rx: 24, fill: 'url(#qxt-hatch)' }, df);
+    const dbg = E('rect', { x, y, width: 340, height: 350, rx: 24, class: 'inkf' }, df);
+    routeIcon(d, k, x + 170, y + 102, 1);
+    T(d, x + 28, y + 212, r.t, 'big', 'font-size:26px');
+    T(d, x + 28, y + 246, r.d[0], '', FONT + 'font-size:17px;fill:#bdbbb4');
+    T(d, x + 28, y + 270, r.d[1], '', FONT + 'font-size:17px;fill:#bdbbb4');
+    chip(d, x + 28, y + 296, r.c, AM);
+    E('rect', { x, y, width: 340, height: 350, class: 'hit' }, dO);
+    // mobile row
+    const my = 130 + k * 212;
+    const mO = E('g', { class: 'mob tap' }, b6);
+    const m = A(E('g', {}, mO), 'pop', (.35 + k * .7).toFixed(2), .5);
+    const mf = rough(m);
+    E('rect', { x: 26, y: my + 6, width: 496, height: 192, rx: 20, fill: 'url(#qxt-hatch)' }, mf);
+    const mbg = E('rect', { x: 20, y: my, width: 496, height: 192, rx: 20, class: 'inkf' }, mf);
+    routeIcon(m, k, 100, my + 92, .78);
+    T(m, 186, my + 56, r.t, 'big', 'font-size:26px');
+    T(m, 186, my + 88, r.d[0], '', FONT + 'font-size:18px;fill:#bdbbb4');
+    T(m, 186, my + 112, r.d[1], '', FONT + 'font-size:18px;fill:#bdbbb4');
+    chip(m, 186, my + 132, r.c, AM);
+    E('rect', { x: 20, y: my, width: 496, height: 192, class: 'hit' }, mO);
+    routeEls.push({ dO, mO, dbg, mbg });
+  });
+  captions(S6, [{ ey: 'POSSIBLE PATHS', d: 'Possible paths for each project', m: ['Possible paths', 'for each project'], t: .45 }]);
+
+  /* =========================================================
+     SCENE 7 · BUSINESS MODEL  (51 – 56.3)
+     ========================================================= */
+  const S7 = mkScene(51, 56.3);
+  const bM = B(S7.cam, 'translate(-370 150)');
+  A(E('path', { d: 'M380 440 L 900 440', class: 'ink mut thin' }, rough(bM)), 'draw', .1, .6);
+  const wr = walker(bM, AM, 0); wr.g.setAttribute('transform', 'translate(520 440)'); pose(wr, 0, false);
+  const qa = walker(bM, TX, 2, true); qa.g.setAttribute('transform', 'translate(760 440) scale(-1 1)'); pose(qa, 0, false);
+  A(wr.g, 'fade', .1, .4); A(qa.g, 'fade', .25, .4);
+  const hs = A(E('path', { d: 'M540 360 L 640 340 L 740 360', class: 'ink', style: 'stroke-width:4' }, rough(bM)), 'draw', .5, .4);
+  const coinsG = E('g', {}, bM);
+  const coins = [];
+  for (let i = 0; i < 16; i++) coins.push({ c: E('circle', { r: 11, fill: AM, stroke: TX, 'stroke-width': 2, opacity: 0 }, coinsG), x: 540 + (i % 8) * 28 + (i % 2) * 6, s: .6 + i * .1 });
+  const modelChips = A(E('g', {}, bM), 'rise', 2.95, .45);
+  const mw1 = chipW('Enterprise licensing'), mw2 = chipW('Participation in IP deals');
+  const mx0 = 640 - (mw1 + mw2 + 12) / 2;
+  chip(modelChips, mx0, 166, 'Enterprise licensing', AM);
+  chip(modelChips, mx0 + mw1 + 12, 166, 'Participation in IP deals', G);
+  captions(S7, [
+    { ey: 'HOW WE EARN', d: 'If it sells, we all win', m: ['If it sells,', 'we all win'], t: .35, o: 2.65 },
+    { ey: 'BUSINESS MODEL', d: ['Enterprise licensing and participation', 'in successful IP deals'], m: ['Enterprise licensing', 'and participation in', 'successful IP deals'], mfs: 36, t: 2.9 }
+  ]);
+
+  /* =========================================================
+     SCENE 8 · END CARD  (56 – 60)
+     ========================================================= */
+  const S8 = mkScene(56, 60);
+  const bE = B(S8.cam, 'translate(-210 160) scale(.75)');
+  A(E('circle', { cx: 640, cy: 300, r: 300, fill: 'url(#qxt-agl)' }, bE), 'fade', 0, .8);
+  const endWm = A(E('g', {}, bE), 'slam', .15, .45);
+  const ewt = T(endWm, 640, 330, 'QANTICA', 'big', 'font-size:124px;font-weight:800;letter-spacing:.02em', 'middle');
+  E('tspan', { style: 'fill:#EFAC39' }, ewt).textContent = '.';
+  A(T(bE, 640, 396, 'Creative IP, validated.', '', FONT + 'font-weight:600;font-size:30px;fill:#bdbbb4', 'middle'), 'rise', .7, .5);
+  const endChips = A(E('g', {}, bE), 'rise', 1.1, .5);
+  const w1 = chipW('QIP · Qantica Intellectual Property'), w2 = chipW('We earn when you earn');
+  const cx0 = 640 - (w1 + w2 + 12) / 2;
+  chip(endChips, cx0, 424, 'QIP · Qantica Intellectual Property', G);
+  chip(endChips, cx0 + w1 + 12, 424, 'We earn when you earn', AM);
+  const cta = E('a', { href: 'https://platform.qantica.com', target: '_blank', rel: 'noopener', class: 'cta' }, bE);
+  const ctaIn = A(E('g', {}, cta), 'pop', 1.5, .5);
+  pill(ctaIn, 520, 480, 240, 54, TX, 'Explore the platform', FONT + 'font-weight:700;font-size:18px;fill:#000');
+
+  /* =========================================================
+     ENGINE
+     ========================================================= */
+  const scenes = SC.map(sc => {
+    const items = [...sc.el.querySelectorAll('[data-a]')].map(n => {
+      const it = { el: n, a: n.dataset.a, t: +(n.dataset.t || 0), d: +(n.dataset.d || 0.6), o: n.dataset.o !== undefined ? +n.dataset.o : 999, last: -1 };
+      if (it.a === 'draw') {
+        const geo = n.tagName === 'g' ? [...n.querySelectorAll('path,circle,rect,line,ellipse')] : [n];
+        it.parts = geo.map(p => { const len = p.getTotalLength(); p.style.strokeDasharray = `${len} ${len}`; return { el: p, len }; });
+      }
+      if (it.a === 'launch') { it.dx = +n.dataset.dx; it.dy = +n.dataset.dy; it.arc = +n.dataset.arc; it.s0 = n.dataset.s0 ? +n.dataset.s0 : .25; }
+      return it;
+    });
+    return Object.assign(sc, { items });
+  });
+  function apply(it, lt) {
+    const r = clamp((lt - it.t) / it.d);
+    const key = it.a === 'cap' ? r + clamp((lt - it.o) / 0.3) * 2 : r;
+    if (key === it.last) return;
+    it.last = key;
+    const s = it.el.style;
+    switch (it.a) {
+      case 'draw': {
+        const p = eo(r);
+        it.parts.forEach(pt => { pt.el.style.strokeDashoffset = pt.len * (1 - p); pt.el.style.fillOpacity = p; });
+        s.opacity = r > 0 ? 1 : 0; break;
+      }
+      case 'fade': s.opacity = eo(r); break;
+      case 'pop': s.opacity = r > 0 ? 1 : 0; s.transform = `scale(${Math.max(0, bo(r))})`; break;
+      case 'rise': s.opacity = eo(r); s.transform = `translate(0px, ${(1 - eo(r)) * 26}px)`; break;
+      case 'slam': s.opacity = r > 0 ? Math.min(1, r * 3) : 0; s.transform = `scale(${1 + (1 - eo(r)) * 1.7})`; break;
+      case 'cap': {
+        const out = clamp((lt - it.o) / 0.3);
+        s.opacity = eo(r) * (1 - out);
+        s.transform = `translate(0px, ${((1 - eo(r)) * 22 - out * 10).toFixed(1)}px)`;
+        s.visibility = (eo(r) * (1 - out)) < 0.01 ? 'hidden' : 'visible';
+        break;
+      }
+      case 'launch': {
+        const p = eo(r);
+        s.opacity = r > 0 ? 1 : 0;
+        s.transform = `translate(${it.dx * p}px, ${it.dy * p - it.arc * Math.sin(Math.PI * p)}px) scale(${it.s0 + (1 - it.s0) * bo(r)})`;
+        break;
+      }
+    }
+  }
+
+  let W = 0, t = 0, playing = false, selRoute = null;
+  const uhearts = [];
+  const custom = [
+    lt => { // 0 writers
+      let lampCol = '#30302c', glow = .3;
+      bgWalkers.forEach((w, k) => {
+        const x = ((lt * 110 + k * 137) % 1500) - 160;
+        w.g.setAttribute('transform', `translate(${x.toFixed(1)} 432) scale(.55)`);
+        pose(w, lt * 10 + k, true);
+      });
+      writers.forEach((w, i) => {
+        const st = wState(i, lt);
+        if (!st) { w.w.g.setAttribute('opacity', 0); w.c.setAttribute('opacity', 0); return; }
+        w.w.g.setAttribute('opacity', st.op.toFixed(3));
+        w.w.g.setAttribute('transform', `translate(${st.x.toFixed(1)} 470) scale(${st.dir} 1)`);
+        pose(w.w, st.ph, st.mv);
+        const cu = clamp((lt - st.ta) / 0.25), co = 1 - clamp((lt - (st.tc + .22)) / .2);
+        w.c.setAttribute('opacity', (lt >= st.ta ? cu * co : 0).toFixed(3));
+        w.c.setAttribute('transform', `translate(${Math.min(st.x, 860).toFixed(1)} 292) scale(${(0.6 + 0.4 * bo(cu)).toFixed(3)})`);
+        if (lt >= st.ta && lt < st.tc + .55) {
+          lampCol = lt < st.tc ? AM : (w.ok ? G : RD);
+          if (w.ok && lt >= st.tc) glow = .3 + .6 * Math.sin(Math.PI * clamp((lt - st.tc) / .55));
+        }
+      });
+      lamp.setAttribute('fill', lampCol);
+      gateGlow.setAttribute('opacity', glow.toFixed(3));
+    },
+    lt => { // 1 profile
+      updCursor(cur1, lt);
+      genre.forEach((c, i) => { const on = i === 0 && lt > 1.25; c.r.setAttribute('fill', on ? AM : '#161614'); c.r.setAttribute('stroke', on ? AM : '#30302c'); c.t.style.fill = on ? '#000' : TX; });
+      format.forEach((c, i) => { const on = i === 0 && lt > 2.05; c.r.setAttribute('fill', on ? AM : '#161614'); c.r.setAttribute('stroke', on ? AM : '#30302c'); c.t.style.fill = on ? '#000' : TX; });
+      scaleAbout(upBtn, 436, 432, pressScale(lt, 2.75));
+      const p = eo(clamp((lt - 3.3) / 1.0));
+      upBar.setAttribute('width', (284 * p).toFixed(1));
+      upStat.textContent = lt < 3.3 ? '' : p < 1 ? `Uploading · ${Math.round(p * 100)}%` : 'Registered on chain · BC1 ✓';
+      upStat.style.fill = p >= 1 ? G : MU;
+    },
+    lt => { // 2 QIP
+      let scanning = false;
+      pages.forEach(p => {
+        const st = pageState(p, lt);
+        if (!st) { p.g.setAttribute('opacity', 0); return; }
+        p.g.setAttribute('opacity', 1);
+        p.g.setAttribute('transform', `translate(${st.x.toFixed(1)} ${st.y.toFixed(1)}) scale(${st.sc.toFixed(3)})`);
+        p.badge.setAttribute('opacity', st.done ? 1 : 0);
+        if (st.scan) scanning = true;
+      });
+      beam.setAttribute('opacity', scanning ? .9 : 0);
+      beam.setAttribute('y', (262 + 110 * Math.abs(Math.sin(lt * 9))).toFixed(1));
+      const f = Math.floor(lt * 14);
+      qDots.forEach((d, i) => d.setAttribute('fill', scanning ? ((i * 7 + f) % 3 === 0 ? G : '#30302c') : (lt > 3.8 ? G : '#30302c')));
+      marks.forEach((m, k) => m.setAttribute('stroke', lt > 4.9 + k * .5 ? G : RD));
+      rows.forEach((r, k) => {
+        const on = lt > 4.9 + k * .5;
+        r.box.setAttribute('fill', on ? G : 'none'); r.box.setAttribute('stroke', on ? G : MU);
+        r.tick.setAttribute('opacity', on ? 1 : 0);
+        r.tx.style.fill = on ? '#8b8a84' : TX;
+      });
+      const v = Math.ceil(23 * (1 - clamp((lt - 4.8) / 2.4)));
+      ipi.textContent = v; ipi.style.fill = v === 0 ? G : TX;
+    },
+    lt => { // 3 community
+      nodes.forEach(n => {
+        const u = eo(clamp((lt - n.t) / .6)), k = 1 + .7 * (1 - u);
+        n.g.setAttribute('opacity', u.toFixed(3));
+        n.g.setAttribute('transform', `translate(${((n.x - CX) * (k - 1)).toFixed(1)} ${((n.y - CY) * (k - 1)).toFixed(1)})`);
+      });
+      pulses.forEach(p => {
+        if (lt < 2.8) { p.c.setAttribute('opacity', 0); return; }
+        const u = (W * .55 + p.off) % 1;
+        p.c.setAttribute('cx', (p.e.p.x + (p.e.q.x - p.e.p.x) * u).toFixed(1));
+        p.c.setAttribute('cy', (p.e.p.y + (p.e.q.y - p.e.p.y) * u).toFixed(1));
+        p.c.setAttribute('opacity', (Math.sin(Math.PI * u) * clamp((lt - 2.8) / .5)).toFixed(3));
+      });
+    },
+    lt => { // 4 package
+      sats.forEach(s => {
+        const u = eio(clamp((lt - s.tk) / .8)), a = s.a - (1 - u) * 1.2;
+        s.g.setAttribute('opacity', clamp((lt - s.tk) / .25).toFixed(3));
+        s.g.setAttribute('transform', `translate(${(640 + 360 * Math.cos(a)).toFixed(1)} ${(300 + 190 * Math.sin(a)).toFixed(1)}) scale(${(.7 + .3 * u).toFixed(3)})`);
+      });
+    },
+    lt => { // 5 showcase + membership
+      people.forEach((p, i) => {
+        const jump = lt > 1 && lt < 3.8 ? Math.max(0, Math.sin((lt - 1 - i * .15) * 6)) * 7 : 0;
+        p.setAttribute('transform', `translate(0 ${(Math.sin(W * 3 + i) * 2.5 - jump).toFixed(2)})`);
+      });
+      hearts.forEach(h => {
+        const u = (lt - h.s) / 1.8;
+        if (u < 0 || u > 1) { h.g.setAttribute('opacity', 0); return; }
+        h.g.setAttribute('opacity', (Math.min(1, u * 6) * (1 - u)).toFixed(3));
+        h.g.setAttribute('transform', `translate(${(h.x + Math.sin(u * 6 + h.s) * 12).toFixed(1)} ${(405 - 175 * u).toFixed(1)}) scale(${(.8 + .6 * u).toFixed(2)})`);
+      });
+      updCursor(cur5, lt);
+      const added = lt > 2.45;
+      addCircle.setAttribute('fill', added ? G : AM);
+      addPlus.setAttribute('opacity', added ? 0 : 1);
+      addTick.setAttribute('opacity', added ? 1 : 0);
+      lcBg.style.stroke = added ? G : TX;
+      const su = clamp((lt - 5.2) / 1.0);
+      shine.setAttribute('x', (300 + su * 700).toFixed(1));
+      shine.setAttribute('opacity', su > 0 && su < 1 ? 1 : 0);
+      tiles.forEach((tl, k) => {
+        const u = bo(clamp((lt - (5.5 + k * .35)) / .35)), lu = clamp(u);
+        tl.sh.setAttribute('transform', `translate(0 ${(-8 * u).toFixed(2)}) rotate(${(-38 * u).toFixed(1)} -9 -2)`);
+        tl.body.setAttribute('fill', lu >= 1 ? G : AM);
+        tl.content.setAttribute('opacity', (.3 + .7 * lu).toFixed(3));
+        tl.bg.style.stroke = lu >= 1 ? AM : TX;
+      });
+    },
+    lt => { // 6 routes
+      routeEls.forEach((r, k) => {
+        const on = selRoute === k;
+        [r.dbg, r.mbg].forEach(b => b.style.stroke = on ? AM : TX);
+        const op = selRoute === null || on ? 1 : .45;
+        r.dO.style.opacity = op; r.mO.style.opacity = op;
+      });
+    },
+    lt => { // 7 model
+      coins.forEach((c, idx) => {
+        const u = (lt - c.s) / .9;
+        if (u < 0) { c.c.setAttribute('opacity', 0); return; }
+        const y = u < 1 ? 40 + 290 * u * u : 330 - (idx % 3) * 6;
+        c.c.setAttribute('cx', c.x); c.c.setAttribute('cy', y.toFixed(1));
+        c.c.setAttribute('opacity', 1);
+      });
+    },
+    lt => { } // 8 end
+  ];
+
+  const barT = $('qxt-barT'), barB = $('qxt-barB'), flash = $('qxt-flash'), wordmark = $('qxt-wordmark');
+  const FLASHES = [19.9, 32.7];
+  const dustG = $('qxt-dust'), dust = [];
+  for (let i = 0; i < 26; i++) {
+    const q = Math.abs(Math.sin(i * 91.7) * 1000) % 1;
+    dust.push({ c: E('circle', { r: 1.2 + q * 2.2, fill: i % 3 ? TX : AM, opacity: 0 }, dustG), x: q * 1280, y: (i * 137) % 720, v: 8 + q * 16, a: .08 + q * .22, ph: i });
+  }
+  function render(t) {
+    scenes.forEach((sc, i) => {
+      const fin = sc.s === 0 ? 1 : clamp((t - sc.s) / 0.35);
+      const fout = sc.e >= DUR ? 1 : clamp((sc.e - t) / 0.35);
+      const vis = t < sc.s ? 0 : Math.min(fin, fout);
+      sc.el.style.opacity = vis;
+      sc.el.style.visibility = vis <= 0.001 ? 'hidden' : 'visible';
+      if (vis <= 0.001) return;
+      const lt = t - sc.s;
+      sc.items.forEach(it => apply(it, lt));
+      custom[i](lt);
+      const k = COARSE ? 1 : 1 + .035 * clamp(lt / (sc.e - sc.s));
+      if (MOB) scaleAbout(sc.cam, 270, 430, k); else scaleAbout(sc.cam, 640, 330, k);
+    });
+    const p = eio(clamp(t / 1.4));
+    const h0 = MOB ? 40 : 34, hm = MOB ? 480 : 360, H = MOB ? 960 : 720;
+    const h = h0 + (hm - h0) * (1 - p);
+    barT.setAttribute('height', (400 + h).toFixed(1));
+    barB.setAttribute('y', (H - h).toFixed(1));
+    wordmark.style.opacity = (clamp((t - 1) / .5) * (1 - clamp((t - 55.7) / .3))).toFixed(3);
+    let fl = 0; FLASHES.forEach(ft => { if (t >= ft) fl = Math.max(fl, .3 * (1 - clamp((t - ft) / .45))); });
+    flash.setAttribute('opacity', fl.toFixed(3));
+    const Wd = MOB ? 540 : 1280, Hd = MOB ? 960 : 720;
+    dust.forEach(d => {
+      const y = ((d.y - W * d.v) % Hd + Hd) % Hd, x = (d.x * Wd / 1280 + Math.sin(W * .4 + d.ph) * 12);
+      d.c.setAttribute('cx', x.toFixed(1)); d.c.setAttribute('cy', y.toFixed(1));
+      d.c.setAttribute('opacity', (d.a * (0.6 + 0.4 * Math.sin(W + d.ph))).toFixed(3));
+    });
+    for (let k = uhearts.length - 1; k >= 0; k--) {
+      const hh = uhearts[k], u = (W - hh.born) / 1.4;
+      if (u > 1) { hh.g.remove(); uhearts.splice(k, 1); continue; }
+      hh.g.setAttribute('opacity', (1 - u).toFixed(3));
+      hh.g.setAttribute('transform', `translate(${(hh.x + Math.sin(u * 7 + hh.x) * 10).toFixed(1)} ${(hh.y - 150 * u).toFixed(1)}) scale(${(1.2 + .5 * u).toFixed(2)})`);
+    }
+  }
+
+  /* =========================================================
+     SOUND (Web Audio, synthesized — no files)
+     ========================================================= */
+  const AU = { ctx: null, master: null, on: false, noise: null, pad: null };
+  function auInit() {
+    if (AU.ctx) return true;
+    const C = window.AudioContext || window.webkitAudioContext; if (!C) return false;
+    try {
+      AU.ctx = new C();
+      AU.master = AU.ctx.createGain(); AU.master.gain.value = .85;
+      const comp = AU.ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 4;
+      AU.master.connect(comp); comp.connect(AU.ctx.destination);
+      const len = AU.ctx.sampleRate * 2, b = AU.ctx.createBuffer(1, len, AU.ctx.sampleRate), d = b.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+      AU.noise = b; return true;
+    } catch (e) { AU.ctx = null; return false; }
+  }
+  function tone(f, dur, type, vol, delay, f2, attack) {
+    const c = AU.ctx, t0 = c.currentTime + (delay || 0), at = attack || .006;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type || 'sine'; o.frequency.setValueAtTime(f, t0);
+    if (f2) o.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
+    g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + at); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(AU.master); o.start(t0); o.stop(t0 + dur + .05);
+  }
+  function noise(dur, vol, type, f, f2, q, delay, attack) {
+    const c = AU.ctx, t0 = c.currentTime + (delay || 0), at = attack || .01;
+    const s = c.createBufferSource(); s.buffer = AU.noise;
+    const fl = c.createBiquadFilter(); fl.type = type || 'bandpass'; fl.frequency.setValueAtTime(f || 1000, t0);
+    if (f2) fl.frequency.exponentialRampToValueAtTime(f2, t0 + dur);
+    fl.Q.value = q || 1;
+    const g = c.createGain(); g.gain.setValueAtTime(0.0001, t0); g.gain.exponentialRampToValueAtTime(vol, t0 + at); g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    s.connect(fl); fl.connect(g); g.connect(AU.master); s.start(t0, Math.random()); s.stop(t0 + dur + .05);
+  }
+  const FX = {
+    click() { tone(1800, .045, 'sine', .16); noise(.03, .1, 'highpass', 4000); },
+    blip() { tone(660, .12, 'sine', .07, 0, 1050); },
+    whoosh() { noise(.55, .2, 'bandpass', 380, 2600, 1.3, 0, .14); },
+    whooshLong() { noise(1.5, .18, 'bandpass', 180, 1800, 1.2, 0, .6); },
+    boom() { tone(68, 1.5, 'sine', .7, 0, 30, .01); noise(.9, .22, 'lowpass', 700, 90, .7); },
+    scan() { tone(240, .32, 'sawtooth', .03, 0, 900); tone(1250, .08, 'sine', .05, .26); },
+    tick() { tone(1320, .09, 'triangle', .12); tone(1760, .12, 'sine', .07, .05); },
+    approveShort() { tone(880, .12, 'sine', .12); tone(1320, .2, 'sine', .09, .07); },
+    deny() { tone(196, .15, 'square', .05); tone(156, .22, 'square', .05, .12); },
+    stamp() { tone(92, .5, 'sine', .9, 0, 36); noise(.28, .45, 'lowpass', 1500, 180, .8); noise(.07, .25, 'highpass', 2200); },
+    approve() { [659, 988, 1319].forEach((f, i) => tone(f, 1.0, 'sine', .11, i * .08)); },
+    ding() { tone(1568, .5, 'sine', .07); tone(2349, .4, 'sine', .035, .02); },
+    chime() { tone(1047, .5, 'sine', .09); tone(1568, .7, 'sine', .07, .1); },
+    coin() { tone(988, .07, 'square', .045); tone(1319, .22, 'square', .045, .07); },
+    unlock() { tone(1100, .05, 'square', .045); tone(1650, .18, 'sine', .1, .05); },
+    shine() { [2093, 2637, 3136].forEach((f, i) => tone(f, .45, 'sine', .035, i * .06)); },
+    pop() { tone(420, .12, 'sine', .16, 0, 880); },
+    cheer() {
+      for (let i = 0; i < 16; i++) noise(.5 + Math.random() * .6, .04 + Math.random() * .04, 'bandpass', 800 + Math.random() * 1600, null, 2.5, i * .07, .06);
+      for (let i = 0; i < 10; i++) noise(.03, .08, 'highpass', 2500, null, 1, .15 + i * .09 + Math.random() * .05);
+    },
+    riser() { noise(1.7, .16, 'bandpass', 200, 5200, 2, 0, 1.5); tone(110, 1.7, 'triangle', .05, 0, 440, 1.4); },
+    finale() { [110, 220, 277.2, 329.6, 440, 554.4].forEach((f, i) => tone(f, 3.2, i < 2 ? 'triangle' : 'sine', i < 2 ? .09 : .06, 0, null, .02)); }
+  };
+  function play(name) { if (AU.on && AU.ctx && FX[name]) { try { FX[name](); } catch (e) {} } }
+  function padStart() {
+    if (AU.pad || !AU.ctx) return;
+    const c = AU.ctx, g = c.createGain();
+    g.gain.setValueAtTime(0.0001, c.currentTime); g.gain.exponentialRampToValueAtTime(.045, c.currentTime + 2);
+    const lp = c.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 800; lp.Q.value = .4;
+    lp.connect(g); g.connect(AU.master);
+    const oscs = [0, 1, 2, 3].map(() => { const o = c.createOscillator(); o.type = 'triangle'; o.connect(lp); o.start(); return o; });
+    const chords = [[110, 164.8, 220, 261.6], [87.3, 130.8, 174.6, 220], [130.8, 196, 261.6, 329.6], [98, 146.8, 196, 246.9]];
+    let idx = 0;
+    const setChord = () => { const ch = chords[idx++ % 4], now = c.currentTime; oscs.forEach((o, i) => o.frequency.setTargetAtTime(ch[i] * (i % 2 ? 1.004 : .996), now, .5)); };
+    setChord();
+    AU.pad = { g, oscs, iv: setInterval(setChord, 4000) };
+  }
+  function padStop() {
+    if (!AU.pad) return;
+    const { g, oscs, iv } = AU.pad, c = AU.ctx; clearInterval(iv);
+    g.gain.cancelScheduledValues(c.currentTime); g.gain.setValueAtTime(Math.max(.0001, g.gain.value), c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + 1.2);
+    oscs.forEach(o => o.stop(c.currentTime + 1.3)); AU.pad = null;
+  }
+  const CUES = [];
+  const cue = (tt, n) => CUES.push([tt, n]);
+  cue(.02, 'boom'); cue(.1, 'whooshLong');
+  writers.forEach((w, i) => { const tc = WS(i) + WALK + .32; cue(tc - .3, 'blip'); cue(tc, w.ok ? 'approveShort' : 'deny'); });
+  cue(7.1, 'whoosh'); cue(8.2, 'click'); cue(9.0, 'click'); cue(9.75, 'click'); cue(9.9, 'whoosh'); cue(11.3, 'chime');
+  cue(12.05, 'whoosh');
+  pages.forEach(p => { cue(12 + p.s + 1.31, 'scan'); cue(12 + p.s + 1.91, p.ok ? 'tick' : 'deny'); });
+  cue(16.2, 'whoosh'); [0, 1, 2, 3, 4].forEach(k => cue(16.9 + k * .5, 'tick'));
+  cue(19.9, 'stamp'); cue(19.95, 'approve');
+  cue(22.05, 'whoosh'); nodes.forEach((n, i) => { if (i % 2 === 0) cue(22 + n.t + .1, 'blip'); });
+  cue(28.05, 'whoosh'); sats.forEach(s => cue(28 + s.tk + .8, 'ding')); cue(32.7, 'stamp'); cue(32.75, 'approve');
+  cue(35.05, 'whoosh'); cue(36.1, 'cheer'); cue(37.45, 'unlock'); cue(39.4, 'whoosh'); cue(40.2, 'shine'); [0, 1, 2, 3].forEach(k => cue(40.5 + k * .35, 'unlock'));
+  [0, 1, 2].forEach(k => cue(44.35 + k * .7, 'whoosh'));
+  cue(51.05, 'whoosh'); [0, 2, 4, 6, 8, 10, 12].forEach(i => cue(51 + .6 + i * .1 + .9, 'coin')); cue(53.95, 'chime');
+  cue(54.4, 'riser'); cue(56.15, 'boom'); cue(56.2, 'finale');
+  CUES.sort((a, b) => a[0] - b[0]);
+
+  /* =========================================================
+     INTERACTIONS + CONTROLS
+     ========================================================= */
+  crowdHit.addEventListener('pointerdown', e => {
+    const p = svg.createSVGPoint(); p.x = e.clientX; p.y = e.clientY;
+    const q = p.matrixTransform(g5c.getScreenCTM().inverse());
+    const g = E('g', {}, uheartsG);
+    E('path', { d: HEART, fill: Math.random() < .5 ? RD : AM, stroke: '#050505', 'stroke-width': 1.5 }, g);
+    uhearts.push({ g, x: q.x, y: q.y, born: W });
+    play('pop');
+  });
+  routeEls.forEach((r, k) => [r.dO, r.mO].forEach(el => el.addEventListener('click', () => { selRoute = selRoute === k ? null : k; play('click'); })));
+  cta.setAttribute('aria-label', 'Explore the platform');
+  cta.addEventListener('click', () => play('click'));
+
+  let prevT = 0;
+  function seek(nt) { t = clamp(nt, 0, DUR); prevT = t; if (t < PH[6].s) selRoute = null; }
+  const replayBtn = $('qxt-replay');
+  replayBtn.addEventListener('click', () => { seek(0); selRoute = null; playing = true; play('click'); });
+  const sndBtn = $('qxt-snd'), sndLbl = $('qxt-sndLbl'), sndWave = $('qxt-sndWave');
+  function setSnd(on) {
+    AU.on = on;
+    if (AU.master && AU.ctx) {
+      AU.master.gain.cancelScheduledValues(AU.ctx.currentTime);
+      AU.master.gain.setValueAtTime(on ? .85 : 0, AU.ctx.currentTime);
+    }
+    sndBtn.classList.toggle('on', on); sndBtn.setAttribute('aria-pressed', on);
+    sndLbl.textContent = on ? 'Sound on' : 'Sound off';
+    sndWave.setAttribute('opacity', on ? 1 : .35);
+    if (!on) padStop();
+  }
+  function enableSound() {
+    try { if (navigator.audioSession) navigator.audioSession.type = 'playback'; } catch (e) {}
+    if (!auInit()) { sndLbl.textContent = 'No audio'; return; }
+    setSnd(true);
+    const resumed = AU.ctx.resume();
+    if (resumed) resumed.catch(() => { if (!disposed) setSnd(false); });
+  }
+  sndBtn.addEventListener('click', () => {
+    if (AU.on) setSnd(false);
+    else { enableSound(); play('click'); }
+  });
+
+  let endShown = null;
+  function updUI() {
+    const ended = t >= DUR - .01;
+    if (ended !== endShown) { endShown = ended; replayBtn.hidden = !ended; }
+  }
+
+  // film grain
+  const grainEl = $('qxt-grain');
+  try {
+    const cv = document.createElement('canvas'); cv.width = cv.height = 180;
+    const cx = cv.getContext('2d'), im = cx.createImageData(180, 180);
+    for (let i = 0; i < im.data.length; i += 4) { const v = Math.random() * 255; im.data[i] = im.data[i + 1] = im.data[i + 2] = v; im.data[i + 3] = 255; }
+    cx.putImageData(im, 0, 0);
+    grainEl.style.backgroundImage = `url(${cv.toDataURL()})`;
+  } catch (e) {}
+
+  const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const turb = $('qxt-turb'), turb2 = $('qxt-turb2'); let seed = 0;
+  if (!reduce && !COARSE) {
+    grainTimer = setInterval(() => { grainEl.style.backgroundPosition = `${Math.floor(Math.random() * 180)}px ${Math.floor(Math.random() * 180)}px`; }, 220);
+  }
+
+  // layout: desktop 16:9 ↔ phone 9:16
+  const stageEl = $('qxt-stage'), wrapEl = ROOT;
+  let layoutInit = false;
+  function setLayout() {
+    const m = wrapEl.clientHeight > wrapEl.clientWidth;
+    if (m === MOB && layoutInit) return;
+    layoutInit = true; MOB = m;
+    svg.classList.toggle('m', m); stageEl.classList.toggle('m', m);
+    svg.setAttribute('viewBox', m ? '0 0 540 960' : '0 0 1280 720');
+    $('qxt-bgGlow').setAttribute('transform', m ? 'translate(-370 0) scale(1 1.4)' : '');
+    blocks.forEach(g => { if (m && g._m) g.setAttribute('transform', g._m); else g.removeAttribute('transform'); });
+    scenes.forEach(sc => sc.items.forEach(it => it.last = -1));
+  }
+  setLayout();
+  window.addEventListener('resize', setLayout);
+  if ('ResizeObserver' in window) {
+    resizeObserver = new ResizeObserver(setLayout);
+    resizeObserver.observe(wrapEl);
+  }
+  function onVisibilityChange() {
+    playing = !document.hidden && t < DUR;
+    if (AU.ctx) {
+      const changed = document.hidden ? AU.ctx.suspend() : AU.ctx.resume();
+      if (changed) changed.catch(() => {});
+    }
+  }
+  document.addEventListener('visibilitychange', onVisibilityChange);
+  // This runs synchronously from the visitor's click, enabling audio immediately.
+  enableSound();
+  playing = true;
+
+  let last = performance.now();
+  function frame(now) {
+    if (disposed) return;
+    const dt = Math.min(.1, (now - last) / 1000); last = now;
+    W += dt;
+    if (playing) { t += dt; if (t >= DUR) { t = DUR; playing = false; } }
+    if (playing && AU.on) CUES.forEach(([ct, n]) => { if (ct > prevT && ct <= t) play(n); });
+    prevT = t;
+    render(t); updUI();
+    animationId = requestAnimationFrame(frame);
+  }
+  render(t); updUI();
+  animationId = requestAnimationFrame(frame);
+  return function stopTeaser() {
+    disposed = true;
+    playing = false;
+    cancelAnimationFrame(animationId);
+    clearInterval(grainTimer);
+    if (resizeObserver) resizeObserver.disconnect();
+    window.removeEventListener('resize', setLayout);
+    document.removeEventListener('visibilitychange', onVisibilityChange);
+    if (AU.pad) clearInterval(AU.pad.iv);
+    if (AU.master && AU.ctx) AU.master.gain.setValueAtTime(0, AU.ctx.currentTime);
+    if (AU.ctx && AU.ctx.state !== 'closed') AU.ctx.close().catch(() => {});
+  };
+}
+</script>
+<script>
+(function(){
+  var dialog = document.getElementById('overview-dialog');
+  var trigger = document.getElementById('overview-open');
+  var screen = document.getElementById('overview-screen');
+  var template = document.getElementById('overview-template');
+  var mount = null, stopTeaser = null, savedScroll = null, savedStyles = null, playingBehind = [];
+  var outsidePointer = false;
+
+  function restorePage(){
+    if (dialog.open || savedScroll === null) return;
+    if (stopTeaser) { stopTeaser(); stopTeaser = null; }
+    if (mount) { mount.remove(); mount = null; }
+    var position = savedScroll;
+    savedScroll = null;
+    Object.keys(savedStyles).forEach(function(key){ document.body.style[key] = savedStyles[key]; });
+    var behavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    window.scrollTo(position.x, position.y);
+    trigger.focus({preventScroll:true});
+    document.documentElement.style.scrollBehavior = behavior;
+    playingBehind.forEach(function(background){
+      var playback = background.play();
+      if (playback) playback.catch(function(){});
+    });
+    playingBehind = [];
+  }
+  function closeOverview(){
+    if (!dialog.open) return;
+    dialog.close();
+    restorePage();
+  }
+  trigger.addEventListener('click', function(){
+    if (dialog.open) return;
+    savedScroll = {x:window.scrollX,y:window.scrollY};
+    savedStyles = {};
+    ['position','top','left','width','overflow'].forEach(function(key){ savedStyles[key] = document.body.style[key]; });
+    playingBehind = Array.from(document.querySelectorAll('video')).filter(function(background){ return !background.paused; });
+    playingBehind.forEach(function(background){ background.pause(); });
+    dialog.showModal();
+    document.body.style.position = 'fixed';
+    document.body.style.top = '-' + savedScroll.y + 'px';
+    document.body.style.left = '-' + savedScroll.x + 'px';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+    mount = document.createElement('div');
+    mount.className = 'overview-mount';
+    var shadow = mount.attachShadow({mode:'open'});
+    shadow.appendChild(template.content.cloneNode(true));
+    screen.appendChild(mount);
+    stopTeaser = mountQanticaTeaser(shadow);
+  });
+  document.getElementById('overview-close').addEventListener('click', closeOverview);
+  dialog.addEventListener('cancel', function(event){ event.preventDefault(); closeOverview(); });
+  dialog.addEventListener('close', restorePage);
+  function isOutside(event){
+    var bounds = dialog.getBoundingClientRect();
+    return event.clientX < bounds.left || event.clientX > bounds.right || event.clientY < bounds.top || event.clientY > bounds.bottom;
+  }
+  dialog.addEventListener('pointerdown', function(event){ outsidePointer = event.target === dialog && isOutside(event); });
+  dialog.addEventListener('click', function(event){
+    if (outsidePointer && event.target === dialog && isOutside(event)) closeOverview();
+    outsidePointer = false;
+  });
 })();
 </script>
 </body>
