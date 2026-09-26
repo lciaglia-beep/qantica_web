@@ -123,7 +123,7 @@
   .pill .sep{color:var(--muted-2)}
   .pill .arr{width:26px;height:26px;border-radius:999px;background:#242422;display:inline-flex;align-items:center;justify-content:center}
   .pill .arr svg{width:11px;height:11px}
-  .hero h1{font-size:clamp(44px,8vw,86px);font-weight:600;line-height:1.02;margin-top:30px;letter-spacing:-.035em}
+  .hero h1{font-size:clamp(44px,8vw,86px);font-weight:600;line-height:1.02;margin-top:0;letter-spacing:-.035em}
   .cycle{display:inline-grid;text-align:center;vertical-align:top}
   .cycle .w{grid-area:1/1;display:block;transition:opacity .5s,transform .5s cubic-bezier(.2,.8,.2,1),filter .5s;opacity:0;transform:translateY(.35em);filter:blur(8px);pointer-events:none}
   .cycle .w.on{opacity:1;transform:none;filter:none}
@@ -443,12 +443,12 @@
   details[open] summary .pm{transform:rotate(45deg);background:var(--amber);color:#000;border-color:var(--amber)}
   details p{color:var(--muted);font-size:16px;padding:0 0 22px;max-width:700px}
 
-  /* investors */
+  /* contact and credentials */
   .inv{margin-top:48px;text-align:center;padding:64px 36px;background-image:radial-gradient(ellipse 50% 70% at 50% 100%,rgba(239,172,57,.14),transparent 70%);background-color:var(--card)}
   .inv h2{font-size:clamp(34px,5vw,58px);font-weight:600;margin-top:18px;line-height:1.05}
   .inv h2 em{font-style:normal;color:var(--amber)}
   .inv p{color:var(--muted);font-size:clamp(17px,2vw,20px);max-width:640px;margin:18px auto 0}
-  .inv .proof{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:28px}
+  .inv .proof{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:0}
   .inv .proof span{padding:8px 14px;border-radius:999px;border:1px solid var(--line-2);background:rgba(255,255,255,.03);font-size:13.5px;font-weight:600;color:#cfcdc6;display:inline-flex;align-items:center;gap:8px;transition:border-color .3s}
   .inv .proof span:hover{border-color:var(--green)}
   .inv .proof span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
@@ -562,9 +562,7 @@
       <a href="#protection" data-i="nav.protection">Protection</a>
       <a href="#sale" data-i="nav.sale">Auction</a>
       <a href="#showcase" data-i="nav.showcase">Showcase</a>
-      <a href="#studios" data-i="nav.studios">Studios</a>
-      <a href="#investors" data-i="nav.investors">Investors</a>
-    </nav>
+      <a href="#studios" data-i="nav.studios">Studios</a>    </nav>
     <div class="nav-r">
       <div class="lang" role="group" aria-label="Language">
         <button type="button" id="lang-en" data-lang="en" aria-pressed="true">EN</button>
@@ -580,9 +578,7 @@
     <a href="#protection" data-i="nav.protection">Protection</a>
     <a href="#sale" data-i="nav.sale">Auction</a>
     <a href="#showcase" data-i="nav.showcase">Showcase</a>
-    <a href="#studios" data-i="nav.studios">Studios</a>
-    <a href="#investors" data-i="nav.investors">Investors</a>
-    <a href="mailto:dferro@qantica.com" data-i="nav.contact">Contact</a>
+    <a href="#studios" data-i="nav.studios">Studios</a>    <a href="mailto:dferro@qantica.com" data-i="nav.contact">Contact</a>
     <a href="https://data-universe.qantica.com/" target="_blank" rel="noopener" data-i="nav.cta">Request data room</a>
   </div></div>
 </header>
@@ -591,7 +587,6 @@
 <!-- ================= HERO ================= -->
 <section class="hero wrap" id="hero">
   <div class="ambient" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div><div class="blob c"></div></div>
-  <a class="pill" href="#investors"><span class="new" data-i="hero.new">NEW</span><span data-i="hero.pill">Seed round open</span><span class="sep">•</span><span class="lbl" data-i="hero.pill2">$3M to become the standard</span><span class="arr"><svg><use href="#i-play"/></svg></span></a>
   <h1><span data-i="hero.h1a">Creative IP,</span><br><span class="cycle" id="cycle" aria-live="off"></span></h1>
   <p class="lead" data-i="hero.lead">Qantica connects creators with studios and platforms through QIP, a patented methodology that takes original stories from first draft to market-ready IP.</p>
   <div class="cta">
@@ -600,7 +595,7 @@
       <span data-i="overview.watch">Watch the overview · 1 min</span>
     </button>
     <a class="btn btn-w" href="https://qantica.com/deck" target="_blank" rel="noopener" data-i="hero.cta1">View deck</a>
-    <a class="btn btn-g" href="#platform" data-i="hero.cta2">Explore the platform</a>
+    <a class="btn btn-g" href="/showcase/" data-i="hero.cta2">Explore the Showcase</a>
   </div>
   <div class="hero-shot rv">
     <div class="win tall glow">
@@ -1023,7 +1018,7 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
 <section id="faq" class="wrap">
   <div class="sec-head rv">
     <span class="eyebrow" data-i="fq.eye">FAQ</span>
-    <h2 data-i="fq.h2">Questions investors ask us</h2>
+    <h2 data-i="fq.h2">Frequently asked questions</h2>
   </div>
   <div class="faq rv">
     <details><summary><span data-i="fq.1.q">Is Qantica a generative AI company?</span><span class="pm"><svg><use href="#i-plus"/></svg></span></summary><p data-i="fq.1.a">QIP analyzes your script and guides revision without writing or rewriting it. Every line remains the author's. After the script has been curated, AI-generated images support storyboards and other visual materials.</p></details>
@@ -1032,17 +1027,12 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
     <details><summary><span data-i="fq.3.q">Who owns the work and the data?</span><span class="pm"><svg><use href="#i-plus"/></svg></span></summary><p data-i="fq.3.a">The author, always. Creative content never leaves the project and is never used to train, fine-tune or improve any model. Only anonymous, aggregated metrics calibrate the analysis engine.</p></details>
     <details><summary><span data-i="fq.4.q">What goes on the blockchain?</span><span class="pm"><svg><use href="#i-plus"/></svg></span></summary><p data-i="fq.4.a">Digital fingerprints, not content: the original work (BC1), the initial diagnosis (BC2), guided questions and author responses (BC3), script revisions and scene changes (BC4) and the final certificate with its improvement metric (BC5). Anyone can verify the chain; nobody can read the script from it.</p></details>
     <details><summary><span data-i="fq.5.q">How does Qantica make money?</span><span class="pm"><svg><use href="#i-plus"/></svg></span></summary><p data-i="fq.5.a">Two paths: enterprise licensing of QIP to studios and platforms as an intake standard, and participation in successful IP sales when certified works are sold at auction. Qantica earns when the author earns.</p></details>
-    <details><summary><span data-i="fq.6.q">What does the seed round fund?</span><span class="pm"><svg><use href="#i-plus"/></svg></span></summary><p data-i="fq.6.a">Scaling enterprise licensing with studios and platforms on top of a platform that is already live, with active projects, two published showcases, blockchain protection in production and infrastructure validated with AWS. View the deck or request the data room for the full plan.</p></details>
   </div>
 </section>
 
-<!-- ================= INVESTORS ================= -->
-<section id="investors" class="wrap">
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="wrap">
   <div class="card inv glow rv">
-    <span class="eyebrow" data-i="inv.eye">Seed round · Open</span>
-    <h2><span data-i="inv.h2a">$3M to become</span> <em data-i="inv.h2b">the standard</em></h2>
-    <p data-i="inv.market">Global entertainment and media market projected to reach $3.4T by 2028.</p>
-    <p data-i="inv.p">Platform live with active projects, two showcases shipped, patented methodology, blockchain protection in production and infrastructure validated with AWS. The technology roadmap also includes specialized LLM development. We're raising to scale enterprise licensing with studios and platforms.</p>
     <div class="proof">
       <span data-i="inv.p0">QIP · patented</span>
       <span data-i="inv.p1">Platform in production</span>
@@ -1082,7 +1072,6 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
       <h5 data-i="ft.co">Company</h5>
       <ul>
         <li><a href="#start" data-i="ft.start">Get started</a></li>
-        <li><a href="#investors" data-i="ft.inv">Investors</a></li>
         <li><a href="#faq">FAQ</a></li>
         <li><a href="mailto:dferro@qantica.com" data-i="ft.contact">Contact</a></li>
       </ul>
@@ -1254,11 +1243,11 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
       "sb.game":"QIP evalúa el potencial de adaptación de un guion a videojuego. El GDD plantea posibles estructuras, mecánicas y momentos jugables para que un estudio pueda evaluar el proyecto antes de comprometer un equipo de desarrollo.",
       "fq.games.q":"¿Cómo aborda Qantica los videojuegos?",
       "fq.games.a":"QIP evalúa el potencial de adaptación de un guion a videojuego y aporta un GDD junto al guion, la biblia y el storyboard. Los derechos de adaptación a videojuego pueden ofrecerse en subasta, como los de cine o serie. El estudio que los adquiere desarrolla el juego.",
-      "inv.market":"Mercado global de entretenimiento y medios proyectado en 3,4 billones de dólares para 2028.",
-      "nav.platform":"Plataforma","nav.protection":"Protección","nav.showcase":"Showcase","nav.studios":"Estudios","nav.investors":"Inversores","nav.contact":"Contacto","nav.cta":"Solicitar data room",
-      "hero.new":"NUEVO","hero.pill":"Ronda seed abierta","hero.pill2":"$3M para ser el estándar","hero.h1a":"Propiedad intelectual,",
+      
+      "nav.platform":"Plataforma","nav.protection":"Protección","nav.showcase":"Showcase","nav.studios":"Estudios","nav.contact":"Contacto","nav.cta":"Solicitar data room",
+      "hero.h1a":"Propiedad intelectual,",
       "hero.lead":"Qantica conecta a creadores con estudios y plataformas a través de QIP, una metodología patentada que lleva historias originales desde el primer borrador hasta una IP lista para el mercado.",
-      "hero.cta1":"Ver el deck","hero.cta2":"Conocer la plataforma",
+      "hero.cta1":"Ver el deck","hero.cta2":"Explorar el Showcase",
       "overview.watch":"Ver el resumen · 1 min","overview.title":"Qantica en un minuto","overview.close":"Cerrar","overview.showcase":"Explorar Showcase",
       "stat.1":"criterios narrativos en cada análisis","stat.2":"sellos blockchain por obra, de BC1 a BC5","stat.3":"ingresos previstos de la industria global del entretenimiento y los medios para 2028","stat.4":"showcases interactivos publicados",
       "sys.eye":"El sistema QIP","sys.pat":"Patentado","sys.h2":"Del primer borrador a una IP lista para el mercado",
@@ -1330,20 +1319,20 @@ The four of them eat, or rather, three of them do. Javi's plate is still full. X
       "dm.fine":"Demo con respuestas guionadas del proyecto de ejemplo <b>Mantis</b> (52 escenas, iteración 1). El Tutor real funciona dentro de la plataforma con tu propio guion.",
       "dm.title":"Chat con el Tutor","dm.st1":"Orientar","dm.st2":"Hoja de ruta","dm.hello":"Hablemos de tu obra. Tengo todo el contexto de Mantis y estoy para ayudarte a pensar, no para escribirla por vos. ¿Qué miramos?",
       "dm.label":"Tu pregunta sobre la obra","dm.ph":"Escribí tu pregunta sobre la obra…","dm.go":"Ir a trabajar","dm.go.sub":"Destinos sugeridos por el Tutor","dm.pending":"puntos pendientes · 19 resueltos",
-      "fq.eye":"Preguntas frecuentes","fq.h2":"Lo que nos preguntan los inversores",
+      "fq.eye":"Preguntas frecuentes","fq.h2":"Preguntas frecuentes",
       "fq.1.q":"¿Qantica es una empresa de IA generativa?","fq.1.a":"QIP analiza tu guion y guía la revisión sin escribirlo ni reescribirlo. Cada línea sigue siendo del autor. Una vez curado el guion, imágenes generadas por IA apoyan los storyboards y otros materiales visuales.",
       "fq.2.q":"¿Qué es exactamente lo patentado?","fq.2.a":"QIP, la metodología que lleva una obra a través del análisis, la iteración medida y la certificación. Es el estándar sobre el que corre la plataforma y el que licenciamos a estudios y plataformas.",
       "fq.3.q":"¿De quién son la obra y los datos?","fq.3.a":"Del autor, siempre. El contenido creativo nunca sale del proyecto y nunca se usa para entrenar, ajustar o mejorar ningún modelo. Solo métricas anónimas y agregadas calibran el motor de análisis.",
       "fq.4.q":"¿Qué se registra en la blockchain?","fq.4.a":"Huellas digitales, no contenido: la obra original (BC1), el diagnóstico inicial (BC2), las preguntas guiadas y las respuestas del autor (BC3), las revisiones del guion y los cambios en las escenas (BC4) y el certificado final con su métrica de mejora (BC5). Cualquiera puede verificar la cadena; nadie puede leer el guion desde ella.",
       "fq.5.q":"¿Cómo gana dinero Qantica?","fq.5.a":"Dos vías: licencias para empresas de QIP a estudios y plataformas como criterio común para evaluar proyectos, y participación en las ventas exitosas de IP cuando las obras certificadas se venden en subasta. Qantica gana cuando gana el autor.",
-      "fq.6.q":"¿Qué financia la ronda seed?","fq.6.a":"Escalar las licencias para empresas con estudios y plataformas sobre una plataforma que ya está en producción, con proyectos activos, dos showcases publicados, protección blockchain operativa e infraestructura validada con AWS. Mirá el deck o solicitá el data room para ver el plan completo.",
-      "inv.eye":"Ronda seed · Abierta","inv.h2a":"$3M para convertirnos en","inv.h2b":"el estándar",
-      "inv.p":"Plataforma en producción con proyectos activos, dos showcases publicados, metodología patentada, protección blockchain operativa e infraestructura validada con AWS. La hoja de ruta tecnológica también incluye el desarrollo de LLM especializados. Levantamos capital para escalar las licencias para empresas con estudios y plataformas.",
+      
+      
+      
       "inv.p0":"QIP · patentado","inv.p1":"Plataforma en producción","inv.p2":"Análisis con IA no generativa","inv.p3":"Registro blockchain operativo","inv.p4":"Colaboración con AWS","inv.p5":"2 showcases interactivos",
       "inv.cta1":"Solicitar data room","inv.cta2":"Ver el deck","inv.cta3":"Solicitar una llamada",
       "ft.fine":"Infraestructura creativa para desarrollar, validar y comercializar IP de entretenimiento. Metodología QIP patentada · IA no generativa · Registro blockchain · Sobre AWS.",
       "ft.prod":"Producto","ft.platform":"Plataforma","ft.qip":"El sistema QIP","ft.prot":"Protección de la obra","ft.std":"Para estudios","ft.show":"Showcase","ft.allshow":"Todos los showcases",
-      "ft.co":"Empresa","ft.start":"Empezar","ft.inv":"Inversores","ft.contact":"Contacto",
+      "ft.co":"Empresa","ft.start":"Empezar","ft.contact":"Contacto",
       "ft.legal":"Legal","ft.terms":"Términos de uso","ft.privacy":"Política de privacidad",
       "ft.copy":"© 2026 Qantica Inc. Todos los derechos reservados. QIP es una metodología patentada.","ft.tag":"Tu obra es tuya. Y solo tuya."
     }
